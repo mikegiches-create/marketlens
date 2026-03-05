@@ -1,101 +1,101 @@
 CustomerID,CustomerName,Recency,Frequency,Monetary,RFM_Score,Segment,Cluster
-2001,Emma Wambua,692,1,92345,114,Big Spenders,2.0
-2002,David Mungai,656,1,56789,111,At Risk,1.0
-2003,Lydia Onyango,622,1,78456,113,At Risk,2.0
-2004,Samuel Kirui,606,1,64532,112,At Risk,1.0
-2005,Grace Nyaga,571,1,87654,114,Big Spenders,2.0
-2006,Isaac Mwende,535,1,71234,212,Others,1.0
-2007,Mary Odera,500,1,59876,211,Others,1.0
-2008,Joseph Ngugi,464,1,93456,214,Big Spenders,2.0
-2009,Esther Mwiti,428,1,68901,212,Others,1.0
-2010,Peter Kiptum,423,1,85678,213,Others,2.0
-2011,Faith Wafula,387,1,62345,211,Others,1.0
-2012,Paul Ochieng,352,1,78901,313,Others,0.0
-2013,Rebecca Nyandiek,316,1,54678,311,Others,3.0
-2014,Thomas Kibiwott,280,1,91234,314,Big Spenders,0.0
-2015,Janet Omondi,247,1,67890,312,Others,3.0
-2016,Simon Nyagah,241,1,84567,313,Others,0.0
-2017,Lucy Kiprono,206,1,72345,312,Others,3.0
-2018,Henry Wanjohi,170,1,89012,414,Loyal Customers,0.0
-2019,Caroline Ouma,135,1,56789,411,Loyal Customers,3.0
-2020,Stephen Mwale,99,1,93456,414,Loyal Customers,0.0
-2021,Veronica Kariuki,687,1,68901,112,At Risk,1.0
-2022,Bernard Nyabuto,651,1,85678,113,At Risk,2.0
-2023,Monica Mutisya,617,1,62345,111,At Risk,1.0
-2024,Andrew Mwanza,581,1,78901,113,At Risk,2.0
-2025,Catherine Odongo,576,1,54678,111,At Risk,1.0
-2026,Philip Kimutai,540,1,91234,124,Big Spenders,2.0
-2027,Ruth Nganga,505,1,67890,222,Others,1.0
-2028,Mark Odera,469,1,84567,223,Others,2.0
-2029,Brenda Mwiti,433,1,72345,222,Others,1.0
-2030,Kenneth Nyandiek,398,1,89012,224,Big Spenders,2.0
-2031,Winnie Kibiwott,362,1,56789,221,Others,3.0
-2032,Wilson Omondi,326,1,93456,324,Big Spenders,0.0
-2033,Evelyn Nyagah,290,1,68901,322,Others,3.0
-2034,Fredrick Kiprono,257,1,85678,323,Others,0.0
-2035,Lilian Wanjohi,221,1,62345,321,Others,3.0
-2036,Nicholas Ouma,186,1,78901,423,Loyal Customers,0.0
-2037,Sharon Mwale,150,1,54678,421,Loyal Customers,3.0
-2038,Anthony Kariuki,114,1,91234,424,Loyal Customers,0.0
-2039,Priscilla Nyabuto,78,1,67890,422,Loyal Customers,3.0
-2040,Victor Mutisya,43,1,84567,423,Loyal Customers,0.0
-2041,Naomi Mwanza,677,1,72345,122,At Risk,1.0
-2042,Joel Odongo,642,1,89012,124,Big Spenders,2.0
-2043,Gladys Kimutai,606,1,56789,121,At Risk,1.0
-2044,Kelvin Nganga,571,1,93456,124,Big Spenders,2.0
-2045,Diana Odera,535,1,68901,222,Others,1.0
-2046,Martin Mwiti,500,1,85678,223,Others,2.0
-2047,Angela Nyandiek,464,1,62345,221,Others,1.0
-2048,Lawrence Kibiwott,428,1,78901,223,Others,2.0
-2049,Jacqueline Omondi,392,1,54678,221,Others,1.0
-2050,Stanley Nyagah,357,1,91234,324,Big Spenders,0.0
-2051,Eunice Kiprono,321,1,67890,332,Others,3.0
-2052,Gideon Wanjohi,285,1,84567,333,Others,0.0
-2053,Maureen Ouma,252,1,72345,332,Others,3.0
-2054,Amos Mwale,216,1,89012,334,Big Spenders,0.0
-2055,Edith Kariuki,180,1,56789,431,Loyal Customers,3.0
-2056,Elijah Nyabuto,145,1,93456,434,Loyal Customers,0.0
-2057,Tabitha Mutisya,109,1,68901,432,Loyal Customers,3.0
-2058,Abraham Mwanza,73,1,85678,433,Loyal Customers,0.0
-2059,Hellen Odongo,38,1,62345,431,Loyal Customers,3.0
-2060,Emmanuel Kimutai,2,1,78901,433,Loyal Customers,0.0
-2061,Phyllis Nganga,697,1,54678,131,At Risk,1.0
-2062,Geoffrey Odera,661,1,91234,134,Big Spenders,2.0
-2063,Winifred Mwiti,627,1,67890,132,At Risk,1.0
-2064,Julius Nyandiek,591,1,84567,133,At Risk,2.0
-2065,Leah Kibiwott,556,1,72345,132,At Risk,1.0
-2066,Mathew Omondi,520,1,89012,234,Big Spenders,2.0
-2067,Esther Nyagah,484,1,56789,231,Others,1.0
-2068,Joseph Kiprono,448,1,93456,234,Big Spenders,2.0
-2069,Lydia Wanjohi,413,1,68901,232,Others,1.0
-2070,Samuel Ouma,377,1,85678,233,Others,2.0
-2071,Grace Mwale,342,1,62345,331,Others,3.0
-2072,Isaac Kariuki,306,1,78901,333,Others,0.0
-2073,Mary Nyabuto,272,1,54678,331,Others,3.0
-2074,Peter Mutisya,236,1,91234,334,Big Spenders,0.0
-2075,Faith Mwanza,201,1,67890,332,Others,3.0
-2076,Paul Odongo,165,1,84567,443,Loyal Customers,0.0
-2077,Rebecca Kimutai,130,1,72345,442,Loyal Customers,3.0
-2078,Thomas Nganga,94,1,89012,444,Champions,0.0
-2079,Janet Odera,58,1,56789,441,Loyal Customers,3.0
-2080,Simon Mwiti,22,1,93456,444,Champions,0.0
-2081,Lucy Nyandiek,687,1,68901,142,Frequent Buyers,1.0
-2082,Henry Kibiwott,651,1,85678,143,Frequent Buyers,2.0
-2083,Caroline Omondi,617,1,62345,141,Frequent Buyers,1.0
-2084,Stephen Nyagah,581,1,78901,143,Frequent Buyers,2.0
-2085,Veronica Kiprono,545,1,54678,141,Frequent Buyers,1.0
-2086,Bernard Wanjohi,510,1,91234,244,Frequent Buyers,2.0
-2087,Monica Ouma,474,1,67890,242,Frequent Buyers,1.0
-2088,Andrew Mwale,438,1,84567,243,Frequent Buyers,2.0
-2089,Catherine Kariuki,403,1,72345,242,Frequent Buyers,1.0
-2090,Philip Nyabuto,337,1,89012,344,Frequent Buyers,0.0
-2091,Ruth Mutisya,300,1,56789,341,Frequent Buyers,3.0
-2092,Mark Mwanza,267,1,93456,344,Frequent Buyers,0.0
-2093,Brenda Odongo,231,1,68901,342,Frequent Buyers,3.0
-2094,Kenneth Kimutai,196,1,85678,343,Frequent Buyers,0.0
-2095,Winnie Nganga,160,1,62345,441,Loyal Customers,3.0
-2096,Wilson Odera,125,1,78901,443,Loyal Customers,0.0
-2097,Evelyn Mwiti,88,1,54678,441,Loyal Customers,3.0
-2098,Fredrick Nyandiek,53,1,91234,444,Champions,0.0
-2099,Lilian Kibiwott,17,1,67890,442,Loyal Customers,3.0
-2100,Nicholas Omondi,-18,1,84567,443,Loyal Customers,0.0
+2001,Emma Wambua,776,1,92345,114,Big Spenders,2.0
+2002,David Mungai,740,1,56789,111,At Risk,1.0
+2003,Lydia Onyango,706,1,78456,113,At Risk,2.0
+2004,Samuel Kirui,690,1,64532,112,At Risk,1.0
+2005,Grace Nyaga,655,1,87654,114,Big Spenders,2.0
+2006,Isaac Mwende,619,1,71234,212,Others,1.0
+2007,Mary Odera,584,1,59876,211,Others,1.0
+2008,Joseph Ngugi,548,1,93456,214,Big Spenders,2.0
+2009,Esther Mwiti,512,1,68901,212,Others,1.0
+2010,Peter Kiptum,507,1,85678,213,Others,2.0
+2011,Faith Wafula,471,1,62345,211,Others,1.0
+2012,Paul Ochieng,436,1,78901,313,Others,0.0
+2013,Rebecca Nyandiek,400,1,54678,311,Others,3.0
+2014,Thomas Kibiwott,364,1,91234,314,Big Spenders,0.0
+2015,Janet Omondi,331,1,67890,312,Others,3.0
+2016,Simon Nyagah,325,1,84567,313,Others,0.0
+2017,Lucy Kiprono,290,1,72345,312,Others,3.0
+2018,Henry Wanjohi,254,1,89012,414,Loyal Customers,0.0
+2019,Caroline Ouma,219,1,56789,411,Loyal Customers,3.0
+2020,Stephen Mwale,183,1,93456,414,Loyal Customers,0.0
+2021,Veronica Kariuki,771,1,68901,112,At Risk,1.0
+2022,Bernard Nyabuto,735,1,85678,113,At Risk,2.0
+2023,Monica Mutisya,701,1,62345,111,At Risk,1.0
+2024,Andrew Mwanza,665,1,78901,113,At Risk,2.0
+2025,Catherine Odongo,660,1,54678,111,At Risk,1.0
+2026,Philip Kimutai,624,1,91234,124,Big Spenders,2.0
+2027,Ruth Nganga,589,1,67890,222,Others,1.0
+2028,Mark Odera,553,1,84567,223,Others,2.0
+2029,Brenda Mwiti,517,1,72345,222,Others,1.0
+2030,Kenneth Nyandiek,482,1,89012,224,Big Spenders,2.0
+2031,Winnie Kibiwott,446,1,56789,221,Others,3.0
+2032,Wilson Omondi,410,1,93456,324,Big Spenders,0.0
+2033,Evelyn Nyagah,374,1,68901,322,Others,3.0
+2034,Fredrick Kiprono,341,1,85678,323,Others,0.0
+2035,Lilian Wanjohi,305,1,62345,321,Others,3.0
+2036,Nicholas Ouma,270,1,78901,423,Loyal Customers,0.0
+2037,Sharon Mwale,234,1,54678,421,Loyal Customers,3.0
+2038,Anthony Kariuki,198,1,91234,424,Loyal Customers,0.0
+2039,Priscilla Nyabuto,162,1,67890,422,Loyal Customers,3.0
+2040,Victor Mutisya,127,1,84567,423,Loyal Customers,0.0
+2041,Naomi Mwanza,761,1,72345,122,At Risk,1.0
+2042,Joel Odongo,726,1,89012,124,Big Spenders,2.0
+2043,Gladys Kimutai,690,1,56789,121,At Risk,1.0
+2044,Kelvin Nganga,655,1,93456,124,Big Spenders,2.0
+2045,Diana Odera,619,1,68901,222,Others,1.0
+2046,Martin Mwiti,584,1,85678,223,Others,2.0
+2047,Angela Nyandiek,548,1,62345,221,Others,1.0
+2048,Lawrence Kibiwott,512,1,78901,223,Others,2.0
+2049,Jacqueline Omondi,476,1,54678,221,Others,1.0
+2050,Stanley Nyagah,441,1,91234,324,Big Spenders,0.0
+2051,Eunice Kiprono,405,1,67890,332,Others,3.0
+2052,Gideon Wanjohi,369,1,84567,333,Others,0.0
+2053,Maureen Ouma,336,1,72345,332,Others,3.0
+2054,Amos Mwale,300,1,89012,334,Big Spenders,0.0
+2055,Edith Kariuki,264,1,56789,431,Loyal Customers,3.0
+2056,Elijah Nyabuto,229,1,93456,434,Loyal Customers,0.0
+2057,Tabitha Mutisya,193,1,68901,432,Loyal Customers,3.0
+2058,Abraham Mwanza,157,1,85678,433,Loyal Customers,0.0
+2059,Hellen Odongo,122,1,62345,431,Loyal Customers,3.0
+2060,Emmanuel Kimutai,86,1,78901,433,Loyal Customers,0.0
+2061,Phyllis Nganga,781,1,54678,131,At Risk,1.0
+2062,Geoffrey Odera,745,1,91234,134,Big Spenders,2.0
+2063,Winifred Mwiti,711,1,67890,132,At Risk,1.0
+2064,Julius Nyandiek,675,1,84567,133,At Risk,2.0
+2065,Leah Kibiwott,640,1,72345,132,At Risk,1.0
+2066,Mathew Omondi,604,1,89012,234,Big Spenders,2.0
+2067,Esther Nyagah,568,1,56789,231,Others,1.0
+2068,Joseph Kiprono,532,1,93456,234,Big Spenders,2.0
+2069,Lydia Wanjohi,497,1,68901,232,Others,1.0
+2070,Samuel Ouma,461,1,85678,233,Others,2.0
+2071,Grace Mwale,426,1,62345,331,Others,3.0
+2072,Isaac Kariuki,390,1,78901,333,Others,0.0
+2073,Mary Nyabuto,356,1,54678,331,Others,3.0
+2074,Peter Mutisya,320,1,91234,334,Big Spenders,0.0
+2075,Faith Mwanza,285,1,67890,332,Others,3.0
+2076,Paul Odongo,249,1,84567,443,Loyal Customers,0.0
+2077,Rebecca Kimutai,214,1,72345,442,Loyal Customers,3.0
+2078,Thomas Nganga,178,1,89012,444,Champions,0.0
+2079,Janet Odera,142,1,56789,441,Loyal Customers,3.0
+2080,Simon Mwiti,106,1,93456,444,Champions,0.0
+2081,Lucy Nyandiek,771,1,68901,142,Frequent Buyers,1.0
+2082,Henry Kibiwott,735,1,85678,143,Frequent Buyers,2.0
+2083,Caroline Omondi,701,1,62345,141,Frequent Buyers,1.0
+2084,Stephen Nyagah,665,1,78901,143,Frequent Buyers,2.0
+2085,Veronica Kiprono,629,1,54678,141,Frequent Buyers,1.0
+2086,Bernard Wanjohi,594,1,91234,244,Frequent Buyers,2.0
+2087,Monica Ouma,558,1,67890,242,Frequent Buyers,1.0
+2088,Andrew Mwale,522,1,84567,243,Frequent Buyers,2.0
+2089,Catherine Kariuki,487,1,72345,242,Frequent Buyers,1.0
+2090,Philip Nyabuto,421,1,89012,344,Frequent Buyers,0.0
+2091,Ruth Mutisya,384,1,56789,341,Frequent Buyers,3.0
+2092,Mark Mwanza,351,1,93456,344,Frequent Buyers,0.0
+2093,Brenda Odongo,315,1,68901,342,Frequent Buyers,3.0
+2094,Kenneth Kimutai,280,1,85678,343,Frequent Buyers,0.0
+2095,Winnie Nganga,244,1,62345,441,Loyal Customers,3.0
+2096,Wilson Odera,209,1,78901,443,Loyal Customers,0.0
+2097,Evelyn Mwiti,172,1,54678,441,Loyal Customers,3.0
+2098,Fredrick Nyandiek,137,1,91234,444,Champions,0.0
+2099,Lilian Kibiwott,101,1,67890,442,Loyal Customers,3.0
+2100,Nicholas Omondi,66,1,84567,443,Loyal Customers,0.0

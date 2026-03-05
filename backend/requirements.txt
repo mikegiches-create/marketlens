@@ -6,6 +6,5 @@ plotly==6.5.2
 scikit-learn==1.8.0
 Werkzeug==3.1.5
 flask-cors==6.0.2
-# Mistral AI via Hugging Face (FREE - No Billing Required!)
 huggingface-hub==0.26.5
 requests==2.32.3

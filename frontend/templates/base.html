@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +14,68 @@
     <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
     
     <style>
+        /* ── Light mode tokens ── */
+        :root, [data-theme="light"] {
+            --bg-page:        #f8f9fa;
+            --bg-sidebar:     #ffffff;
+            --bg-card:        #ffffff;
+            --bg-input:       #ffffff;
+            --bg-table-head:  #f8fafc;
+            --bg-table-row-hover: #f8fafc;
+            --bg-stat-icon:   linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            --bg-chart:       #f8f9fa;
+            --bg-user-info:   #f8fafc;
+            --bg-user-info-hover: #f1f5f9;
+            --bg-nav-hover:   #f8fafc;
+            --bg-nav-active:  #eff6ff;
+            --bg-top-bar:     #ffffff;
+            --bg-dropdown:    #ffffff;
+            --bg-logout:      #ffffff;
+            --border:         #e2e8f0;
+            --border-table:   #f1f5f9;
+            --text-primary:   #1e293b;
+            --text-secondary: #64748b;
+            --text-muted:     #94a3b8;
+            --text-nav:       #64748b;
+            --text-nav-active:#1e40af;
+            --text-card-title:#1e293b;
+            --text-form:      #334155;
+            --text-footer:    #94a3b8;
+            --shadow-card:    0 1px 3px rgba(0,0,0,0.05);
+            --shadow-card-hover: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        /* ── Dark mode tokens ── */
+        [data-theme="dark"] {
+            --bg-page:        #0f172a;
+            --bg-sidebar:     #1e293b;
+            --bg-card:        #1e293b;
+            --bg-input:       #263549;
+            --bg-table-head:  #263549;
+            --bg-table-row-hover: #263549;
+            --bg-stat-icon:   linear-gradient(135deg, #1e3a8a, #1e40af);
+            --bg-chart:       #263549;
+            --bg-user-info:   #263549;
+            --bg-user-info-hover: #2d3f55;
+            --bg-nav-hover:   #263549;
+            --bg-nav-active:  #1e3a8a22;
+            --bg-top-bar:     #1e293b;
+            --bg-dropdown:    #263549;
+            --bg-logout:      #1e293b;
+            --border:         #334155;
+            --border-table:   #334155;
+            --text-primary:   #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted:     #64748b;
+            --text-nav:       #94a3b8;
+            --text-nav-active:#93c5fd;
+            --text-card-title:#f1f5f9;
+            --text-form:      #cbd5e1;
+            --text-footer:    #64748b;
+            --shadow-card:    0 1px 3px rgba(0,0,0,0.3);
+            --shadow-card-hover: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -22,9 +84,10 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #f8f9fa;
+            background: var(--bg-page);
             min-height: 100vh;
-            color: #1e293b;
+            color: var(--text-primary);
+            transition: background 0.3s, color 0.3s;
         }
 
         /* Sidebar Navigation */
@@ -34,8 +97,8 @@
             top: 0;
             width: 260px;
             height: 100vh;
-            background: white;
-            border-right: 1px solid #e2e8f0;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
             z-index: 1000;
             transition: all 0.3s;
             display: flex;
@@ -45,7 +108,7 @@
 
         .sidebar-header {
             padding: 24px 20px;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid var(--border);
         }
 
         .sidebar-brand {
@@ -89,7 +152,215 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: #94a3b8;
+            color: var(--text-muted);
+        }
+
+        /* ── Theme Toggle Button ── */
+        /* ── Premium Sky Toggle (mini — lives in dropdown) ── */
+        .dropdown-theme-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+            border-bottom: 1px solid var(--border);
+            padding: 10px 16px;
+        }
+
+        .dropdown-theme-item:hover {
+            background: var(--bg-nav-hover);
+        }
+
+        .dropdown-theme-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .dropdown-theme-icon {
+            font-size: 1rem;
+            transition: transform 0.4s ease;
+        }
+
+        .dropdown-theme-item:hover .dropdown-theme-icon {
+            transform: rotate(20deg);
+        }
+
+        /* The mini sky toggle track */
+        .sky-toggle-mini {
+            position: relative;
+            width: 56px;
+            height: 28px;
+            border-radius: 999px;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+            outline: none;
+            overflow: hidden;
+            flex-shrink: 0;
+            pointer-events: none; /* parent div handles the click */
+        }
+
+        /* Sky background */
+        .sky-bg {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            transition: background 0.6s ease;
+            background: linear-gradient(135deg, #87ceeb 0%, #60a5fa 50%, #3b82f6 100%);
+        }
+
+        [data-theme="dark"] .sky-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1e293b 100%);
+        }
+
+        /* Stars (only visible in dark) */
+        .sky-stars {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.5s ease 0.1s;
+        }
+
+        [data-theme="dark"] .sky-stars {
+            opacity: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+        .star:nth-child(1)  { width:2px; height:2px; top:20%; left:15%; animation-delay:0s; }
+        .star:nth-child(2)  { width:3px; height:3px; top:35%; left:28%; animation-delay:0.3s; }
+        .star:nth-child(3)  { width:2px; height:2px; top:15%; left:42%; animation-delay:0.7s; }
+        .star:nth-child(4)  { width:2px; height:2px; top:55%; left:55%; animation-delay:0.4s; }
+        .star:nth-child(5)  { width:3px; height:3px; top:25%; left:68%; animation-delay:0.9s; }
+        .star:nth-child(6)  { width:2px; height:2px; top:60%; left:78%; animation-delay:0.2s; }
+        .star:nth-child(7)  { width:2px; height:2px; top:40%; left:88%; animation-delay:0.6s; }
+
+        @keyframes twinkle {
+            from { opacity: 0.3; transform: scale(0.8); }
+            to   { opacity: 1;   transform: scale(1.2); }
+        }
+
+        /* Clouds (only visible in light) */
+        .sky-clouds {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            overflow: hidden;
+            opacity: 1;
+            transition: opacity 0.4s ease;
+        }
+
+        [data-theme="dark"] .sky-clouds {
+            opacity: 0;
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255,255,255,0.85);
+            border-radius: 999px;
+        }
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: inherit;
+            border-radius: 50%;
+        }
+        .cloud-1 {
+            width: 36px; height: 12px;
+            top: 10px; left: 120px;
+            animation: drift 8s linear infinite;
+        }
+        .cloud-1::before { width:16px; height:16px; top:-8px; left:6px; }
+        .cloud-1::after  { width:12px; height:12px; top:-5px; left:18px; }
+
+        .cloud-2 {
+            width: 28px; height: 9px;
+            top: 22px; left: 80px;
+            animation: drift 12s linear infinite 2s;
+            opacity: 0.7;
+        }
+        .cloud-2::before { width:12px; height:12px; top:-6px; left:4px; }
+        .cloud-2::after  { width:10px; height:10px; top:-4px; left:14px; }
+
+        @keyframes drift {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-160px); }
+        }
+
+        /* The sliding orb (sun ↔ moon) — mini */
+        .sky-orb-mini {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%) translateX(4px);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        background 0.4s ease,
+                        box-shadow 0.4s ease;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Sun state */
+        .sky-orb-mini {
+            background: radial-gradient(circle at 35% 35%, #fde68a, #f59e0b);
+            box-shadow: 0 0 0 3px rgba(245,158,11,0.25),
+                        0 0 10px rgba(245,158,11,0.5);
+        }
+
+        /* Moon state */
+        [data-theme="dark"] .sky-orb-mini {
+            transform: translateY(-50%) translateX(30px);
+            background: radial-gradient(circle at 35% 35%, #f1f5f9, #cbd5e1);
+            box-shadow: 0 0 0 3px rgba(148,163,184,0.2),
+                        0 0 10px rgba(148,163,184,0.4);
+        }
+
+        /* Sun rays */
+        .orb-rays {
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(253,230,138,0.6) 30%, transparent 70%);
+            animation: pulse-glow 2s ease-in-out infinite;
+            transition: opacity 0.4s;
+        }
+
+        [data-theme="dark"] .orb-rays {
+            opacity: 0;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { transform: scale(1);    opacity: 0.7; }
+            50%       { transform: scale(1.15); opacity: 1; }
+        }
+
+        /* Moon crater (mini) */
+        .orb-crater {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.1);
+            opacity: 0;
+            transition: opacity 0.4s ease 0.2s;
+        }
+        .orb-crater-1 { width:4px; height:4px; top:4px;  left:12px; }
+        .orb-crater-2 { width:3px; height:3px; top:12px; left:5px;  }
+
+        [data-theme="dark"] .orb-crater {
+            opacity: 1;
         }
 
         .sidebar-nav-link {
@@ -97,7 +368,7 @@
             align-items: center;
             gap: 12px;
             padding: 12px 20px;
-            color: #64748b;
+            color: var(--text-nav);
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
@@ -106,14 +377,14 @@
         }
 
         .sidebar-nav-link:hover {
-            background: #f8fafc;
-            color: #1e40af;
-            border-left-color: #cbd5e1;
+            background: var(--bg-nav-hover);
+            color: var(--text-nav-active);
+            border-left-color: var(--border);
         }
 
         .sidebar-nav-link.active {
-            background: #eff6ff;
-            color: #1e40af;
+            background: var(--bg-nav-active);
+            color: var(--text-nav-active);
             font-weight: 600;
             border-left-color: #2563eb;
         }
@@ -126,9 +397,10 @@
 
         .sidebar-footer {
             padding: 16px 20px;
-            border-top: 1px solid #e2e8f0;
-            background: white;
+            border-top: 1px solid var(--border);
+            background: var(--bg-sidebar);
             flex-shrink: 0;
+            position: relative;
         }
 
         .user-info {
@@ -136,9 +408,15 @@
             align-items: center;
             gap: 12px;
             padding: 10px 12px;
-            background: #f8fafc;
+            background: var(--bg-user-info);
             border-radius: 8px;
-            margin-top: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .user-info:hover {
+            background: var(--bg-user-info-hover);
         }
 
         .user-avatar {
@@ -161,24 +439,80 @@
         .user-name {
             font-size: 0.85rem;
             font-weight: 600;
-            color: #1e293b;
+            color: var(--text-primary);
             margin-bottom: 2px;
         }
 
         .user-role {
             font-size: 0.75rem;
-            color: #64748b;
+            color: var(--text-secondary);
+        }
+
+        .user-dropdown-icon {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            transition: transform 0.2s;
+        }
+
+        .user-info.active .user-dropdown-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Dropdown Menu */
+        .user-dropdown {
+            display: none;
+            background: var(--bg-dropdown);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .user-dropdown.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: none;
+            background: none;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover {
+            background: var(--bg-nav-hover);
+            color: var(--text-nav-active);
+        }
+
+        .dropdown-item i {
+            width: 18px;
+            text-align: center;
+        }
+
+        .dropdown-item.danger:hover {
+            background: #fef2f2;
+            color: #dc2626;
         }
 
         .logout-btn {
             width: 100%;
             padding: 10px;
-            background: white;
-            border: 1.5px solid #e2e8f0;
+            background: var(--bg-logout);
+            border: 1.5px solid var(--border);
             border-radius: 6px;
             font-size: 0.85rem;
             font-weight: 600;
-            color: #64748b;
+            color: var(--text-secondary);
             cursor: pointer;
             transition: all 0.2s;
             text-decoration: none;
@@ -201,8 +535,8 @@
             top: 20px;
             left: 20px;
             z-index: 1001;
-            background: white;
-            border: 1px solid #e2e8f0;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 8px;
             padding: 10px 14px;
             cursor: pointer;
@@ -223,8 +557,8 @@
 
         /* Top Bar */
         .top-bar {
-            background: white;
-            border-bottom: 1px solid #e2e8f0;
+            background: var(--bg-top-bar);
+            border-bottom: 1px solid var(--border);
             padding: 16px 32px;
             margin-bottom: 32px;
             display: flex;
@@ -235,14 +569,14 @@
         .page-title-bar {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #1e293b;
+            color: var(--text-primary);
         }
 
         /* Page headers */
         .page-header {
             background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
             border-radius: 16px;
-            padding: 48px;
+            padding: 2.5rem 2rem;
             margin-bottom: 32px;
             color: white;
             box-shadow: 0 4px 20px rgba(37, 99, 235, 0.15);
@@ -251,7 +585,7 @@
         .page-header-title {
             font-size: 2.5rem;
             font-weight: 700;
-            margin-bottom: 12px;
+            margin-bottom: 0.75rem;
             letter-spacing: -1px;
         }
 
@@ -264,24 +598,24 @@
 
         /* Cards */
         .card, .analysis-card {
-            background: white;
-            border: 1px solid #e2e8f0;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow-card);
             margin-bottom: 24px;
             padding: 24px;
             transition: all 0.3s ease;
         }
 
         .card:hover, .analysis-card:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow-card-hover);
             transform: translateY(-2px);
         }
 
         .card-title {
             font-size: 1.1rem;
             font-weight: 600;
-            color: #1e293b;
+            color: var(--text-card-title);
             margin-bottom: 16px;
             padding-left: 12px;
             border-left: 3px solid #2563eb;
@@ -296,24 +630,24 @@
         }
 
         .stat-card {
-            background: white;
-            border: 1px solid #e2e8f0;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 12px;
             padding: 24px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow-card);
             transition: all 0.3s ease;
         }
 
         .stat-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-card-hover);
             border-color: #2563eb;
         }
 
         .stat-icon {
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            background: var(--bg-stat-icon);
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -326,7 +660,7 @@
         .stat-label {
             font-size: 0.8rem;
             font-weight: 600;
-            color: #64748b;
+            color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 8px;
@@ -335,7 +669,7 @@
         .stat-value {
             font-size: 2rem;
             font-weight: 700;
-            color: #1e293b;
+            color: var(--text-primary);
             line-height: 1;
         }
 
@@ -367,14 +701,14 @@
         }
 
         .btn-secondary {
-            background: white;
-            color: #475569;
-            border: 1.5px solid #e2e8f0;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border: 1.5px solid var(--border);
         }
 
         .btn-secondary:hover {
-            background: #f8f9fa;
-            border-color: #cbd5e1;
+            background: var(--bg-nav-hover);
+            border-color: var(--border);
         }
 
         .btn-success {
@@ -391,7 +725,7 @@
             display: block;
             font-size: 0.85rem;
             font-weight: 600;
-            color: #334155;
+            color: var(--text-form);
             margin-bottom: 8px;
         }
 
@@ -399,10 +733,10 @@
             width: 100%;
             padding: 12px 14px;
             font-size: 0.9rem;
-            border: 1.5px solid #e2e8f0;
+            border: 1.5px solid var(--border);
             border-radius: 8px;
-            background: #ffffff;
-            color: #1e293b;
+            background: var(--bg-input);
+            color: var(--text-primary);
             font-family: 'Inter', sans-serif;
             transition: all 0.2s;
         }
@@ -415,11 +749,11 @@
 
         /* Tables */
         .table-responsive {
-            background: white;
+            background: var(--bg-card);
             border-radius: 12px;
             padding: 16px;
             overflow-x: auto;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border);
         }
 
         .table {
@@ -429,25 +763,25 @@
         }
 
         .table thead th {
-            background: #f8fafc;
-            color: #1e293b;
+            background: var(--bg-table-head);
+            color: var(--text-primary);
             font-weight: 600;
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             padding: 14px 12px;
-            border-bottom: 2px solid #e2e8f0;
+            border-bottom: 2px solid var(--border);
         }
 
         .table tbody td {
             padding: 14px 12px;
-            border-bottom: 1px solid #f1f5f9;
-            color: #475569;
+            border-bottom: 1px solid var(--border-table);
+            color: var(--text-secondary);
             font-size: 0.9rem;
         }
 
         .table tbody tr:hover {
-            background: #f8fafc;
+            background: var(--bg-table-row-hover);
         }
 
         /* Alerts */
@@ -488,7 +822,7 @@
 
         /* Chart Container */
         .chart-container {
-            background: #f8f9fa;
+            background: var(--bg-chart);
             border-radius: 10px;
             padding: 16px;
             min-height: 300px;
@@ -498,9 +832,9 @@
         .footer {
             text-align: center;
             padding: 24px;
-            color: #94a3b8;
+            color: var(--text-footer);
             font-size: 0.85rem;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid var(--border);
             margin-top: 48px;
         }
 
@@ -576,7 +910,7 @@
             }
 
             .page-header {
-                padding: 32px 24px;
+                padding: 2rem 1.5rem;
             }
 
             .page-header-title {
@@ -602,6 +936,13 @@
     </style>
     
     {% block extra_css %}{% endblock %}
+    <!-- Prevent theme flash -->
+    <script>
+        (function(){
+            var t = localStorage.getItem('ml-theme');
+            if (t) document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
 </head>
 <body>
     <!-- Mobile Toggle -->
@@ -616,20 +957,6 @@
                 <img src="{{ url_for('static', filename='images/Logo/logo-Photoroom.png') }}" alt="">
                 <span>MARKET LENS</span>
             </a>
-            {% if session.get('user') %}
-                <div class="role-badge {% if session.get('role') == 'CEO' %}ceo{% elif session.get('role') == 'Company Analyst' %}analyst{% endif %}">
-                    {{ session.get('role') }}
-                </div>
-                <div class="user-info">
-                    <div class="user-avatar">
-                        {{ session.get('user')[0].upper() }}
-                    </div>
-                    <div class="user-details">
-                        <div class="user-name">{{ session.get('user') }}</div>
-                        <div class="user-role">{{ session.get('role') }}</div>
-                    </div>
-                </div>
-            {% endif %}
         </div>
 
         <nav class="sidebar-nav">
@@ -637,6 +964,10 @@
             <a href="{{ url_for('home') }}" class="sidebar-nav-link {% if request.endpoint == 'home' %}active{% endif %}">
                 <i class="fas fa-home"></i>
                 <span>Home</span>
+            </a>
+            <a href="{{ url_for('dashboard') }}" class="sidebar-nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}">
+                <i class="fas fa-chart-line"></i>
+                <span>Dashboard</span>
             </a>
             <a href="{{ url_for('overview_analysis') }}" class="sidebar-nav-link {% if request.endpoint == 'overview_analysis' %}active{% endif %}">
                 <i class="fas fa-chart-pie"></i>
@@ -692,10 +1023,52 @@
 
         {% if session.get('user') %}
         <div class="sidebar-footer">
-            <a href="{{ url_for('logout') }}" class="logout-btn">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-            </a>
+            <div class="user-info" onclick="toggleUserDropdown()" id="userInfo">
+                <div class="user-avatar">
+                    {{ session.get('user')[0].upper() }}
+                </div>
+                <div class="user-details">
+                    <div class="user-name">{{ session.get('user') }}</div>
+                    <div class="user-role">{{ session.get('role') }}</div>
+                </div>
+                <i class="fas fa-chevron-down user-dropdown-icon"></i>
+            </div>
+
+            <div class="user-dropdown" id="userDropdown">
+                <a href="{{ url_for('settings') }}" class="dropdown-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+
+                <!-- Theme Toggle Item -->
+                <div class="dropdown-item dropdown-theme-item" onclick="toggleTheme()">
+                    <div class="dropdown-theme-left">
+                        <span class="dropdown-theme-icon" id="themeIcon">☀️</span>
+                        <span id="themeLabel">Light Mode</span>
+                    </div>
+                    <button class="sky-toggle-mini" id="themeToggle" aria-label="Toggle theme">
+                        <div class="sky-bg"></div>
+                        <div class="sky-stars">
+                            <div class="star"></div><div class="star"></div>
+                            <div class="star"></div><div class="star"></div>
+                            <div class="star"></div>
+                        </div>
+                        <div class="sky-clouds">
+                            <div class="cloud cloud-1"></div>
+                        </div>
+                        <div class="sky-orb-mini" id="skyOrb">
+                            <div class="orb-rays"></div>
+                            <div class="orb-crater orb-crater-1"></div>
+                            <div class="orb-crater orb-crater-2"></div>
+                        </div>
+                    </button>
+                </div>
+
+                <a href="{{ url_for('logout') }}" class="dropdown-item danger">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
         </div>
         {% endif %}
     </div>
@@ -724,6 +1097,29 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        /* ── Theme ── */
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            const label = document.getElementById('themeLabel');
+            const icon  = document.getElementById('themeIcon');
+            if (label) label.textContent = theme === 'dark' ? 'Dark Mode'  : 'Light Mode';
+            if (icon)  icon.textContent  = theme === 'dark' ? '🌙'         : '☀️';
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next    = current === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('ml-theme', next);
+            applyTheme(next);
+        }
+
+        /* Apply saved theme immediately on load (before paint) */
+        (function () {
+            const saved = localStorage.getItem('ml-theme') || 'light';
+            applyTheme(saved);
+        })();
+
+        /* ── Sidebar ── */
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('active');
         }
@@ -731,6 +1127,28 @@
         function toggleChat() {
             window.location.href = "{{ url_for('ask_data_ui') }}";
         }
+
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            const userInfo = document.getElementById('userInfo');
+            dropdown.classList.toggle('show');
+            userInfo.classList.toggle('active');
+        }
+
+        // Close dropdown when clicking outside (but not on theme toggle)
+        document.addEventListener('click', function(event) {
+            const userInfo = document.getElementById('userInfo');
+            const dropdown = document.getElementById('userDropdown');
+            
+            if (userInfo && dropdown) {
+                const themeItem = dropdown.querySelector('.dropdown-theme-item');
+                if (themeItem && themeItem.contains(event.target)) return; // keep open
+                if (!userInfo.contains(event.target) && !dropdown.contains(event.target)) {
+                    dropdown.classList.remove('show');
+                    userInfo.classList.remove('active');
+                }
+            }
+        });
     </script>
 
     {% block extra_js %}{% endblock %}

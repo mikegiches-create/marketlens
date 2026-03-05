@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Market Lens - Create Account</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -19,17 +19,30 @@
             display: flex;
         }
 
-        /* Left Panel - Brand */
+        /* Container for animation */
+        .auth-container {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Brand Panel - Starts on RIGHT for register page */
         .brand-panel {
             width: 45%;
-            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
+            min-height: 100vh;
+            background: url('https://image.slidesdocs.com/responsive-images/background/forensic-investigation--how-it-works-powerpoint-background_be35bf2c06__960_540.jpg') center center / cover no-repeat;
+            background-attachment: fixed;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
-            padding: 60px;
+            padding: 48px 60px 60px;
             color: white;
             position: relative;
+            order: 2;
+            z-index: 2;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .brand-panel::before {
@@ -39,8 +52,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
-            opacity: 0.5;
+            background: rgba(0, 0, 0, 0.45);
+            transition: opacity 1.2s ease;
         }
 
         .brand-content {
@@ -48,18 +61,21 @@
             z-index: 1;
             text-align: center;
             max-width: 400px;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .logo-container {
             margin-bottom: 40px;
+            transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .logo-image {
-            height: 200px;
+            height: 160px;
             width: auto;
             filter: brightness(0) invert(1);
-            margin-bottom: -50px;
-            margin-top: -240px;
+            margin-bottom: -30px;
+            margin-top: -20px;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .brand-title {
@@ -67,6 +83,7 @@
             font-weight: 700;
             margin-bottom: 16px;
             letter-spacing: -1px;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .brand-subtitle {
@@ -75,11 +92,13 @@
             opacity: 0.9;
             line-height: 1.6;
             margin-bottom: 40px;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .features-list {
             list-style: none;
             text-align: left;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .features-list li {
@@ -88,6 +107,12 @@
             opacity: 0.95;
             display: flex;
             align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .features-list li:hover {
+            opacity: 1;
+            transform: translateX(5px);
         }
 
         .features-list li::before {
@@ -101,26 +126,36 @@
             line-height: 24px;
             margin-right: 12px;
             font-weight: 600;
+            transition: all 0.3s ease;
         }
 
-        /* Right Panel - Register Form */
+        .features-list li:hover::before {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* Register Panel - Starts on LEFT */
         .register-panel {
             width: 55%;
             background: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 60px;
+            padding: 60px 20px;
             overflow-y: auto;
+            order: 1;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .register-container {
             width: 100%;
             max-width: 440px;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .register-header {
             margin-bottom: 32px;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .register-title {
@@ -138,26 +173,85 @@
 
         .form-group {
             margin-bottom: 20px;
+            animation: fadeInUp 0.6s ease backwards;
+            position: relative;
         }
 
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+        .form-group:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Label animation on hover */
         .form-label {
-            display: block;
+            display: inline-block;
             font-size: 14px;
             font-weight: 600;
             color: #334155;
             margin-bottom: 8px;
+            cursor: pointer;
+            transition: color 0.3s ease, letter-spacing 0.3s ease;
         }
 
+        .form-group:hover .form-label,
+        .form-group:focus-within .form-label {
+            color: #2563eb;
+            letter-spacing: 0.5px;
+        }
+
+        /* Animated underline sweep under label */
+        .form-label::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #2563eb;
+            border-radius: 2px;
+            margin-top: 2px;
+            transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .form-group:hover .form-label::after,
+        .form-group:focus-within .form-label::after {
+            width: 100%;
+        }
+
+        /* Field expands on hover/focus, stays open when filled */
         .form-control {
             width: 100%;
-            padding: 14px 16px;
+            max-height: 0;
+            padding: 0 16px;
             font-size: 15px;
             border: 1.5px solid #e2e8f0;
             border-radius: 8px;
             background: #ffffff;
             color: #1e293b;
             font-family: 'Inter', sans-serif;
-            transition: all 0.2s;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .form-group:hover .form-control,
+        .form-group:focus-within .form-control,
+        .form-control.has-value {
+            max-height: 56px;
+            padding: 14px 16px;
+            opacity: 1;
+            pointer-events: all;
         }
 
         .form-control:focus {
@@ -172,7 +266,8 @@
 
         .form-select {
             width: 100%;
-            padding: 14px 16px;
+            max-height: 0;
+            padding: 0 16px;
             font-size: 15px;
             border: 1.5px solid #e2e8f0;
             border-radius: 8px;
@@ -180,7 +275,19 @@
             color: #1e293b;
             font-family: 'Inter', sans-serif;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .form-group:hover .form-select,
+        .form-group:focus-within .form-select,
+        .form-select.has-value {
+            max-height: 56px;
+            padding: 14px 16px;
+            opacity: 1;
+            pointer-events: all;
         }
 
         .form-select:focus {
@@ -208,6 +315,11 @@
             margin-top: 2px;
             cursor: pointer;
             flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:hover {
+            transform: scale(1.1);
         }
 
         .checkbox-wrapper label {
@@ -221,10 +333,23 @@
             color: #2563eb;
             text-decoration: none;
             font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .checkbox-wrapper label a:hover {
-            text-decoration: underline;
+        .checkbox-wrapper label a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #2563eb;
+            transition: width 0.3s ease;
+        }
+
+        .checkbox-wrapper label a:hover::after {
+            width: 100%;
         }
 
         .btn-register {
@@ -238,15 +363,37 @@
             border-radius: 8px;
             cursor: pointer;
             font-family: 'Inter', sans-serif;
-            transition: all 0.2s;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-register::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-register:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn-register:hover {
             background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
         }
 
         .btn-register:active {
-            transform: scale(0.98);
+            transform: translateY(0);
         }
 
         .signin-section {
@@ -266,40 +413,24 @@
             text-decoration: none;
             font-weight: 600;
             margin-left: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .signin-link:hover {
-            text-decoration: underline;
+        .signin-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #2563eb;
+            transition: width 0.3s ease;
         }
 
-        /* Responsive */
-        @media (max-width: 968px) {
-            body {
-                flex-direction: column;
-            }
-
-            .brand-panel {
-                width: 100%;
-                min-height: 250px;
-                padding: 40px 20px;
-            }
-
-            .register-panel {
-                width: 100%;
-                padding: 40px 20px;
-            }
-
-            .brand-title {
-                font-size: 32px;
-            }
-
-            .features-list {
-                display: none;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
+        .signin-link:hover::after {
+            width: 100%;
         }
 
         /* Alert Styles */
@@ -309,6 +440,18 @@
             margin-bottom: 20px;
             font-size: 14px;
             font-weight: 500;
+            animation: slideInDown 0.5s ease;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .alert-danger {
@@ -338,180 +481,319 @@
             border-radius: 2px;
             margin-top: 8px;
             overflow: hidden;
+            transition: all 0.3s ease;
         }
 
         .password-strength-bar {
             height: 100%;
             width: 0%;
-            transition: all 0.3s;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 2px;
         }
 
-        .strength-weak { width: 33%; background: #ef4444; }
-        .strength-medium { width: 66%; background: #f59e0b; }
-        .strength-strong { width: 100%; background: #22c55e; }
+        .strength-weak { 
+            width: 33%; 
+            background: #ef4444;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+        .strength-medium { 
+            width: 66%; 
+            background: #f59e0b;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+        }
+        .strength-strong { 
+            width: 100%; 
+            background: #22c55e;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            body {
+                flex-direction: column;
+            }
+
+            .auth-container {
+                flex-direction: column;
+            }
+
+            .brand-panel {
+                width: 100%;
+                min-height: 250px;
+                padding: 40px 20px;
+                order: 1;
+            }
+
+            .register-panel {
+                width: 100%;
+                padding: 40px 20px;
+                order: 2;
+            }
+
+            .brand-title {
+                font-size: 32px;
+            }
+
+            .features-list {
+                display: none;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Left Brand Panel -->
-    <div class="brand-panel">
-        <div class="brand-content">
-            <div class="logo-container">
-                <img src="{{ url_for('static', filename='images/Logo/logo-Photoroom.png') }}" alt="Market Lens" class="logo-image">
-            </div>
-            <h1 class="brand-title">MARKET LENS</h1>
-            <p class="brand-subtitle">Join thousands of businesses transforming data into insights</p>
-            
-            <ul class="features-list">
-                <li>Comprehensive analytics dashboard</li>
-                <li>Advanced customer segmentation</li>
-                <li>Automated reporting & insights</li>
-                <li>Secure & enterprise-grade</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Right Register Panel -->
-    <div class="register-panel">
-        <div class="register-container">
-            <div class="register-header">
-                <h2 class="register-title">Create Account</h2>
-                <p class="register-description">Get started with Market Lens today</p>
-            </div>
-
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-
-            <form method="POST" action="{{ url_for('register') }}" id="registerForm">
-                <div class="form-group">
-                    <label for="username" class="form-label">Username</label>
-                    <input 
-                        type="text" 
-                        id="username" 
-                        name="username" 
-                        class="form-control" 
-                        placeholder="Choose a username"
-                        required
-                        autocomplete="username"
-                    >
+    <div class="auth-container">
+        <!-- Register Panel - LEFT -->
+        <div class="register-panel">
+            <div class="register-container">
+                <div class="register-header">
+                    <h2 class="register-title">Create Account</h2>
+                    <p class="register-description">Get started with Market Lens today</p>
                 </div>
 
-                <div class="form-group">
-                    <label for="email" class="form-label">Email Address</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        class="form-control" 
-                        placeholder="your.email@company.com"
-                        required
-                        autocomplete="email"
-                    >
-                </div>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
 
-                <div class="form-row">
+                <form method="POST" action="{{ url_for('register') }}" id="registerForm">
                     <div class="form-group">
-                        <label for="password" class="form-label">Password</label>
+                        <label for="username" class="form-label">Username</label>
                         <input 
-                            type="password" 
-                            id="password" 
-                            name="password" 
+                            type="text" 
+                            id="username" 
+                            name="username" 
                             class="form-control" 
-                            placeholder="Create a password"
+                            placeholder="Choose a username"
                             required
-                            autocomplete="new-password"
+                            autocomplete="username"
                         >
-                        <div class="password-strength">
-                            <div class="password-strength-bar" id="strengthBar"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-control" 
+                            placeholder="your.email@company.com"
+                            required
+                            autocomplete="email"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="business_name" class="form-label">Business Name</label>
+                        <input 
+                            type="text" 
+                            id="business_name" 
+                            name="business_name" 
+                            class="form-control" 
+                            placeholder="Enter your business name"
+                            required
+                            autocomplete="organization"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="business_category" class="form-label">Business Category</label>
+                        <select id="business_category" name="business_category" class="form-select" required>
+                            <option value="" disabled selected>Select your business category</option>
+                            <option value="Retail">Retail</option>
+                            <option value="E-commerce">E-commerce</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Finance">Finance & Banking</option>
+                            <option value="Education">Education</option>
+                            <option value="Hospitality">Hospitality & Tourism</option>
+                            <option value="Real Estate">Real Estate</option>
+                            <option value="Manufacturing">Manufacturing</option>
+                            <option value="Professional Services">Professional Services</option>
+                            <option value="Food & Beverage">Food & Beverage</option>
+                            <option value="Transportation">Transportation & Logistics</option>
+                            <option value="Media">Media & Entertainment</option>
+                            <option value="Telecommunications">Telecommunications</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="password" class="form-label">Password</label>
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                class="form-control" 
+                                placeholder="Create a password"
+                                required
+                                autocomplete="new-password"
+                            >
+                            <div class="password-strength">
+                                <div class="password-strength-bar" id="strengthBar"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirm_password" class="form-label">Confirm Password</label>
+                            <input 
+                                type="password" 
+                                id="confirm_password" 
+                                name="confirm_password" 
+                                class="form-control" 
+                                placeholder="Confirm password"
+                                required
+                                autocomplete="new-password"
+                            >
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="confirm_password" class="form-label">Confirm Password</label>
-                        <input 
-                            type="password" 
-                            id="confirm_password" 
-                            name="confirm_password" 
-                            class="form-control" 
-                            placeholder="Confirm password"
-                            required
-                            autocomplete="new-password"
-                        >
+                        <label for="role" class="form-label">Role</label>
+                        <select id="role" name="role" class="form-select" required>
+                            <option value="" disabled selected>Select your role</option>
+                            <option value="CEO">CEO</option>
+                            <option value="Company Analyst">Company Analyst</option>
+                        </select>
                     </div>
+
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms">
+                            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-register">Create Account</button>
+                </form>
+
+                <div class="signin-section">
+                    <span class="signin-text">Already have an account?</span>
+                    <a href="{{ url_for('login') }}" class="signin-link">Sign In</a>
                 </div>
 
-                <div class="form-group">
-                    <label for="role" class="form-label">Role</label>
-                    <select id="role" name="role" class="form-select" required>
-                        <option value="" disabled selected>Select your role</option>
-                        <option value="CEO">CEO</option>
-                        <option value="Company Analyst">Company Analyst</option>
-                    </select>
+                <div class="register-footer">
+                    <p>&copy; 2026 Market Lens. All rights reserved.</p>
                 </div>
-
-                <div class="checkbox-wrapper">
-                    <input type="checkbox" id="terms" name="terms" required>
-                    <label for="terms">
-                        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
-                    </label>
-                </div>
-
-                <button type="submit" class="btn-register">Create Account</button>
-            </form>
-
-            <div class="signin-section">
-                <span class="signin-text">Already have an account?</span>
-                <a href="{{ url_for('login') }}" class="signin-link">Sign In</a>
             </div>
+        </div>
 
-            <div class="register-footer">
-                <p>&copy; 2026 Market Lens. All rights reserved.</p>
+        <!-- Brand Panel - RIGHT -->
+        <div class="brand-panel">
+            <div class="brand-content">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='images/Logo/logo-Photoroom.png') }}" alt="Market Lens" class="logo-image">
+                </div>
+                <h1 class="brand-title">MARKET LENS</h1>
+                <p class="brand-subtitle">Join thousands of businesses transforming data into insights</p>
+                
+                <ul class="features-list">
+                    <li>Comprehensive analytics dashboard</li>
+                    <li>Advanced customer segmentation</li>
+                    <li>Automated reporting & insights</li>
+                    <li>Secure & enterprise-grade</li>
+                </ul>
             </div>
         </div>
     </div>
 
     <script>
-        // Password strength indicator
+        // ── Keep fields visible once they have a value ──
+        function trackValue(el) {
+            const update = () => {
+                if (el.value.trim() !== '') {
+                    el.classList.add('has-value');
+                } else {
+                    el.classList.remove('has-value');
+                }
+            };
+            el.addEventListener('input', update);
+            el.addEventListener('change', update);
+            update();
+        }
+
+        document.querySelectorAll('.form-control, .form-select').forEach(trackValue);
+
+        // Password strength indicator with smooth animations
         const passwordInput = document.getElementById('password');
         const strengthBar = document.getElementById('strengthBar');
 
-        passwordInput.addEventListener('input', function() {
-            const password = this.value;
-            let strength = 0;
+        if (passwordInput && strengthBar) {
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 0;
 
-            if (password.length >= 8) strength++;
-            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
-            if (/\d/.test(password)) strength++;
-            if (/[^a-zA-Z\d]/.test(password)) strength++;
+                if (password.length >= 8) strength++;
+                if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+                if (/\d/.test(password)) strength++;
+                if (/[^a-zA-Z\d]/.test(password)) strength++;
 
-            strengthBar.className = 'password-strength-bar';
-            if (strength === 0) {
-                strengthBar.style.width = '0%';
-            } else if (strength <= 2) {
-                strengthBar.classList.add('strength-weak');
-            } else if (strength === 3) {
-                strengthBar.classList.add('strength-medium');
-            } else {
-                strengthBar.classList.add('strength-strong');
-            }
-        });
+                strengthBar.className = 'password-strength-bar';
+                if (strength === 0) {
+                    strengthBar.style.width = '0%';
+                } else if (strength <= 2) {
+                    strengthBar.classList.add('strength-weak');
+                } else if (strength === 3) {
+                    strengthBar.classList.add('strength-medium');
+                } else {
+                    strengthBar.classList.add('strength-strong');
+                }
+            });
+        }
 
         // Form validation
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirm_password').value;
+        const registerForm = document.getElementById('registerForm');
+        if (registerForm) {
+            registerForm.addEventListener('submit', function(e) {
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirm_password').value;
 
-            if (password !== confirmPassword) {
+                if (password !== confirmPassword) {
+                    e.preventDefault();
+                    alert('Passwords do not match!');
+                    return false;
+                }
+            });
+        }
+
+        // Professional page transition animation
+        const signinLink = document.querySelector('.signin-link');
+        if (signinLink) {
+            signinLink.addEventListener('click', function(e) {
                 e.preventDefault();
-                alert('Passwords do not match!');
-                return false;
-            }
-        });
+                const brandPanel = document.querySelector('.brand-panel');
+                const registerPanel = document.querySelector('.register-panel');
+                const brandContent = document.querySelector('.brand-content');
+                const registerContainer = document.querySelector('.register-container');
+                
+                if (brandPanel && registerPanel) {
+                    // Fade out content first
+                    brandContent.style.opacity = '0';
+                    brandContent.style.transform = 'scale(0.95)';
+                    registerContainer.style.opacity = '0';
+                    registerContainer.style.transform = 'translateX(30px)';
+                    
+                    // Then slide panels
+                    setTimeout(() => {
+                        brandPanel.style.transform = 'translateX(-122%)';
+                        brandPanel.style.opacity = '0.3';
+                        registerPanel.style.transform = 'translateX(20px)';
+                    }, 300);
+                    
+                    // Navigate after animation
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 1200);
+                }
+            });
+        }
     </script>
 </body>
 </html>

@@ -1,129 +1,211 @@
 """
-Mistral AI Integration for Market Lens
-Using Hugging Face InferenceClient (FREE - Recommended 2024 Method)
+MARKET LENS AI — ULTRA STABLE CHAT CLIENT (2026)
 
-This module provides a drop-in replacement for OpenAI's API
-using Mistral-7B-Instruct-v0.2 via Hugging Face's official client.
+Features:
+✅ HuggingFace Router compatible
+✅ Automatic model fallback
+✅ Smart retry system
+✅ Timeout protection
+✅ Free-tier optimized
+✅ Zero downtime responses
+✅ OpenAI-style wrapper compatible
 """
 
 import os
+import time
 from typing import Dict, List
 
-# Using Hugging Face's official client library
-try:
-    from huggingface_hub import InferenceClient
-except ImportError:
-    raise ImportError(
-        "Please install huggingface_hub: pip install huggingface_hub"
-    )
+from huggingface_hub import InferenceClient
 
-class MistralClient:
-    """Free Mistral AI client using Hugging Face InferenceClient"""
-    
-    def __init__(self, api_token: str = None, model: str = None):
+
+# ==============================
+# CORE CLIENT
+# ==============================
+
+class MarketLensAIClient:
+
+    # ⭐ 2026 FREE-TIER STABLE MODELS (ordered by reliability)
+    MODELS = [
+        "mistralai/Mistral-7B-Instruct-v0.3",
+        "microsoft/Phi-3-mini-4k-instruct",
+        "HuggingFaceH4/zephyr-7b-beta",
+        "Qwen/Qwen2.5-7B-Instruct",
+    ]
+
+    MAX_RETRIES = 2
+    MODEL_COOLDOWN = 60  # seconds before retrying failed model
+
+    def __init__(self, api_token: str = None):
+
         self.api_token = api_token or os.getenv("HUGGINGFACE_API_TOKEN")
-        self.model = model or os.getenv("MISTRAL_MODEL", "mistralai/Mistral-7B-Instruct-v0.2")
-        
+
         if not self.api_token:
             raise ValueError(
-                "Hugging Face API token not found! "
-                "Get your FREE token from https://huggingface.co/settings/tokens "
-                "and add it to your .env file as HUGGINGFACE_API_TOKEN"
+                "Missing HUGGINGFACE_API_TOKEN in .env"
             )
-        
-        # Initialize the official Hugging Face Inference Client
-        self.client = InferenceClient(token=self.api_token)
-    
-    def chat_completion(self, messages: List[Dict[str, str]], temperature: float = 0.45, max_tokens: int = 1000) -> str:
-        """Generate chat completion using Mistral AI"""
-        
-        try:
-            # Convert messages to the proper format
-            formatted_messages = self._format_messages(messages)
-            
-            # Use the new chat_completion method
-            response = self.client.chat_completion(
-                messages=formatted_messages,
-                model=self.model,
-                temperature=temperature,
-                max_tokens=max_tokens,
-                top_p=0.9
-            )
-            
-            # Extract the generated text
-            if response and hasattr(response, 'choices') and len(response.choices) > 0:
-                return response.choices[0].message.content.strip()
-            else:
-                return "⚠️ No response generated. Try again."
-                
-        except Exception as e:
-            error_msg = str(e).lower()
-            
-            if "rate limit" in error_msg:
-                return "⏱️ Rate limit reached. Please wait a moment and try again."
-            elif "model is currently loading" in error_msg or "503" in error_msg:
-                return "⏳ The AI model is loading. Please try again in 20-30 seconds!"
-            elif "unauthorized" in error_msg or "401" in error_msg:
-                return "❌ Invalid Hugging Face API token. Please check your .env file."
-            elif "forbidden" in error_msg or "403" in error_msg:
-                return "❌ Access forbidden. Check if your token has the right permissions."
-            elif "not found" in error_msg or "404" in error_msg:
-                return f"❌ Model not found: {self.model}. Check the model name in .env"
-            elif "timeout" in error_msg:
-                return "⏱️ Request timed out. Please try again!"
-            else:
-                return f"❌ Error: {str(e)}"
-    
-    def _format_messages(self, messages: List[Dict[str, str]]) -> List[Dict[str, str]]:
-        """Format messages for Hugging Face chat_completion"""
-        formatted = []
-        for msg in messages:
-            formatted.append({
-                "role": msg.get("role", "user"),
-                "content": msg.get("content", "")
-            })
-        return formatted
 
+        self.client = InferenceClient(
+            token=self.api_token,
+            timeout=60,
+        )
+
+        self.failed_models = {}
+        self.working_model = None
+
+    # ==============================
+    # MODEL HEALTH CHECK
+    # ==============================
+
+    def _model_available(self, model: str) -> bool:
+        """Skip models recently failed."""
+        if model not in self.failed_models:
+            return True
+
+        last_fail = self.failed_models[model]
+        return (time.time() - last_fail) > self.MODEL_COOLDOWN
+
+    def _mark_failed(self, model: str):
+        self.failed_models[model] = time.time()
+
+    # ==============================
+    # CHAT COMPLETION
+    # ==============================
+
+    def chat_completion(
+        self,
+        messages: List[Dict[str, str]],
+        temperature: float = 0.4,
+        max_tokens: int = 900,
+    ) -> str:
+
+        models_to_try = []
+
+        if self.working_model:
+            models_to_try.append(self.working_model)
+
+        models_to_try.extend(
+            [m for m in self.MODELS if m not in models_to_try]
+        )
+
+        last_error = None
+
+        for model in models_to_try:
+
+            if not self._model_available(model):
+                continue
+
+            for attempt in range(self.MAX_RETRIES):
+
+                try:
+                    response = self.client.chat_completion(
+                        model=model,
+                        messages=messages,
+                        temperature=temperature,
+                        max_tokens=max_tokens,
+                    )
+
+                    text = response.choices[0].message.content
+
+                    if text and text.strip():
+                        self.working_model = model
+                        print(f"✅ MarketLens AI using: {model}")
+                        return text.strip()
+
+                except Exception as e:
+
+                    error = str(e).lower()
+                    last_error = str(e)
+
+                    # Model loading
+                    if "loading" in error or "503" in error:
+                        return "⏳ AI is waking up. Please retry in 20 seconds."
+
+                    # Router removed model
+                    if "410" in error or "gone" in error:
+                        self._mark_failed(model)
+                        break
+
+                    # Rate limit
+                    if "429" in error:
+                        time.sleep(2)
+                        continue
+
+                    # Unauthorized
+                    if "401" in error or "unauthorized" in error:
+                        return self._token_error()
+
+                    self._mark_failed(model)
+
+        return self._fallback_response(last_error)
+
+    # ==============================
+    # ERROR HANDLING
+    # ==============================
+
+    def _token_error(self):
+        return (
+            "❌ Invalid Hugging Face API token.\n\n"
+            "1. Go to https://huggingface.co/settings/tokens\n"
+            "2. Create READ token\n"
+            "3. Update .env\n"
+            "4. Restart app"
+        )
+
+    def _fallback_response(self, error):
+        return (
+            "⚠️ AI temporarily busy.\n\n"
+            "Free AI models are under heavy demand.\n"
+            "Please retry in a few seconds.\n\n"
+            f"Debug: {str(error)[:150]}"
+        )
+
+
+# ==============================
+# OPENAI COMPATIBILITY LAYER
+# ==============================
 
 class ChatCompletion:
-    """OpenAI-compatible wrapper for Mistral AI"""
-    
-    def __init__(self, client: MistralClient):
+
+    def __init__(self, client: MarketLensAIClient):
         self.client = client
-    
-    def create(self, model: str, messages: List[Dict[str, str]], temperature: float = 0.45, **kwargs):
-        """OpenAI-compatible create method"""
-        response_text = self.client.chat_completion(
+
+    def create(self, model, messages, temperature=0.4, **kwargs):
+
+        text = self.client.chat_completion(
             messages=messages,
             temperature=temperature,
-            max_tokens=kwargs.get('max_tokens', 1000)
+            max_tokens=kwargs.get("max_tokens", 900),
         )
-        return MistralResponse(response_text)
+
+        return Response(text)
 
 
-class MistralResponse:
-    """OpenAI-compatible response object"""
-    def __init__(self, text: str):
-        self.choices = [MistralChoice(text)]
+class Response:
+    def __init__(self, text):
+        self.choices = [Choice(text)]
 
 
-class MistralChoice:
-    """OpenAI-compatible choice object"""
-    def __init__(self, text: str):
-        self.message = MistralMessage(text)
+class Choice:
+    def __init__(self, text):
+        self.message = Message(text)
 
 
-class MistralMessage:
-    """OpenAI-compatible message object"""
-    def __init__(self, text: str):
+class Message:
+    def __init__(self, text):
         self.content = text
 
 
-class MistralClientWrapper:
-    """Main client wrapper that mimics OpenAI's interface"""
-    
-    def __init__(self, api_token: str = None):
-        mistral_client = MistralClient(api_token=api_token)
-        self.chat = type('Chat', (), {
-            'completions': ChatCompletion(mistral_client)
-        })()
+class MarketLensAIWrapper:
+    """
+    Drop-in replacement for OpenAI client.
+    """
+
+    def __init__(self, api_token=None):
+        client = MarketLensAIClient(api_token)
+        self.chat = type(
+            "Chat",
+            (),
+            {"completions": ChatCompletion(client)},
+        )()
+        # compatibility alias
+MistralClientWrapper = MarketLensAIWrapper

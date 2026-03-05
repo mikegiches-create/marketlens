@@ -19,17 +19,45 @@
             display: flex;
         }
 
+        /* Container for animation */
+        .auth-container {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Animation classes */
+        .slide-exit {
+            animation: slideOutAndFade 1.2s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+        }
+
+        @keyframes slideOutAndFade {
+            0% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(122%);
+                opacity: 0.3;
+            }
+        }
+
         /* Left Panel - Brand */
         .brand-panel {
             width: 45%;
-            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
+            min-height: 100vh;
+            background: url('https://image.slidesdocs.com/responsive-images/background/forensic-investigation--how-it-works-powerpoint-background_be35bf2c06__960_540.jpg') center center / cover no-repeat;
+            background-attachment: fixed;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
-            padding: 60px;
+            padding: 48px 60px 60px;
             color: white;
             position: relative;
+            z-index: 2;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .brand-panel::before {
@@ -39,8 +67,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
-            opacity: 0.5;
+            background: rgba(0, 0, 0, 0.45);
+            transition: opacity 1.2s ease;
         }
 
         .brand-content {
@@ -48,18 +76,21 @@
             z-index: 1;
             text-align: center;
             max-width: 400px;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .logo-container {
             margin-bottom: 40px;
+            transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .logo-image {
-            height: 200px;
+            height: 160px;
             width: auto;
             filter: brightness(0) invert(1);
-            margin-bottom: -50px;
-            margin-top: -100px;
+            margin-bottom: -30px;
+            margin-top: -20px;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .brand-title {
@@ -67,6 +98,7 @@
             font-weight: 700;
             margin-bottom: 16px;
             letter-spacing: -1px;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .brand-subtitle {
@@ -75,11 +107,13 @@
             opacity: 0.9;
             line-height: 1.6;
             margin-bottom: 40px;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .features-list {
             list-style: none;
             text-align: left;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .features-list li {
@@ -88,6 +122,12 @@
             opacity: 0.95;
             display: flex;
             align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .features-list li:hover {
+            opacity: 1;
+            transform: translateX(5px);
         }
 
         .features-list li::before {
@@ -101,6 +141,12 @@
             line-height: 24px;
             margin-right: 12px;
             font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .features-list li:hover::before {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
         }
 
         /* Right Panel - Login Form */
@@ -110,16 +156,20 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 60px;
+            padding: 60px 20px;
+            overflow-y: auto;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .login-container {
             width: 100%;
             max-width: 440px;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .login-header {
-            margin-bottom: 40px;
+            margin-bottom: 32px;
+            transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
         }
 
         .login-title {
@@ -136,27 +186,86 @@
         }
 
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.6s ease backwards;
+            position: relative;
         }
 
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+        .form-group:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Label animation on hover */
         .form-label {
-            display: block;
+            display: inline-block;
             font-size: 14px;
             font-weight: 600;
             color: #334155;
             margin-bottom: 8px;
+            cursor: pointer;
+            transition: color 0.3s ease, letter-spacing 0.3s ease;
         }
 
+        .form-group:hover .form-label,
+        .form-group:focus-within .form-label {
+            color: #2563eb;
+            letter-spacing: 0.5px;
+        }
+
+        /* Animated underline sweep under label */
+        .form-label::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #2563eb;
+            border-radius: 2px;
+            margin-top: 2px;
+            transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .form-group:hover .form-label::after,
+        .form-group:focus-within .form-label::after {
+            width: 100%;
+        }
+
+        /* Field expands on hover/focus */
         .form-control {
             width: 100%;
-            padding: 14px 16px;
+            max-height: 0;
+            padding: 0 16px;
             font-size: 15px;
             border: 1.5px solid #e2e8f0;
             border-radius: 8px;
             background: #ffffff;
             color: #1e293b;
             font-family: 'Inter', sans-serif;
-            transition: all 0.2s;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .form-group:hover .form-control,
+        .form-group:focus-within .form-control,
+        .form-control.has-value {
+            max-height: 56px;
+            padding: 14px 16px;
+            opacity: 1;
+            pointer-events: all;
         }
 
         .form-control:focus {
@@ -171,7 +280,8 @@
 
         .form-select {
             width: 100%;
-            padding: 14px 16px;
+            max-height: 0;
+            padding: 0 16px;
             font-size: 15px;
             border: 1.5px solid #e2e8f0;
             border-radius: 8px;
@@ -179,7 +289,19 @@
             color: #1e293b;
             font-family: 'Inter', sans-serif;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .form-group:hover .form-select,
+        .form-group:focus-within .form-select,
+        .form-select.has-value {
+            max-height: 56px;
+            padding: 14px 16px;
+            opacity: 1;
+            pointer-events: all;
         }
 
         .form-select:focus {
@@ -205,6 +327,11 @@
             height: 18px;
             margin-right: 8px;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:hover {
+            transform: scale(1.1);
         }
 
         .checkbox-wrapper label {
@@ -218,10 +345,23 @@
             color: #2563eb;
             text-decoration: none;
             font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .forgot-link:hover {
-            text-decoration: underline;
+        .forgot-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #2563eb;
+            transition: width 0.3s ease;
+        }
+
+        .forgot-link:hover::after {
+            width: 100%;
         }
 
         .btn-login {
@@ -235,36 +375,37 @@
             border-radius: 8px;
             cursor: pointer;
             font-family: 'Inter', sans-serif;
-            transition: all 0.2s;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-login:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn-login:hover {
             background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
         }
 
         .btn-login:active {
-            transform: scale(0.98);
-        }
-
-        .divider {
-            display: flex;
-            align-items: center;
-            margin: 32px 0;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #e2e8f0;
-        }
-
-        .divider span {
-            padding: 0 16px;
-            font-size: 13px;
-            color: #94a3b8;
-            font-weight: 500;
+            transform: translateY(0);
         }
 
         .signup-section {
@@ -284,15 +425,74 @@
             text-decoration: none;
             font-weight: 600;
             margin-left: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .signup-link:hover {
-            text-decoration: underline;
+        .signup-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #2563eb;
+            transition: width 0.3s ease;
+        }
+
+        .signup-link:hover::after {
+            width: 100%;
+        }
+
+        /* Alert Styles */
+        .alert {
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            font-weight: 500;
+            animation: slideInDown 0.5s ease;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-danger {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        /* Footer */
+        .login-footer {
+            margin-top: 32px;
+            text-align: center;
+            font-size: 13px;
+            color: #94a3b8;
         }
 
         /* Responsive */
         @media (max-width: 968px) {
             body {
+                flex-direction: column;
+            }
+
+            .auth-container {
                 flex-direction: column;
             }
 
@@ -315,128 +515,232 @@
                 display: none;
             }
         }
-
-        /* Alert Styles */
-        .alert {
-            padding: 14px 16px;
-            border-radius: 8px;
-            margin-bottom: 24px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .alert-danger {
-            background: #fef2f2;
-            color: #991b1b;
-            border: 1px solid #fecaca;
-        }
-
-        .alert-success {
-            background: #f0fdf4;
-            color: #166534;
-            border: 1px solid #bbf7d0;
-        }
-
-        /* Footer */
-        .login-footer {
-            margin-top: 32px;
-            text-align: center;
-            font-size: 13px;
-            color: #94a3b8;
-        }
     </style>
 </head>
 <body>
-    <!-- Left Brand Panel -->
-    <div class="brand-panel">
-        <div class="brand-content">
-            <div class="logo-container">
-                <img src="{{ url_for('static', filename='images/Logo/logo-Photoroom.png') }}" alt="Market Lens" class="logo-image">
+    <div class="auth-container">
+        <!-- Left Brand Panel -->
+        <div class="brand-panel">
+            <div class="brand-content">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='images/Logo/logo-Photoroom.png') }}" alt="Market Lens" class="logo-image">
+                </div>
+                <h1 class="brand-title">MARKET LENS</h1>
+                <p class="brand-subtitle">Advanced Analytics & Business Intelligence Platform</p>
+                
+                <ul class="features-list">
+                    <li>Real-time data analytics and insights</li>
+                    <li>Customer behavior analysis</li>
+                    <li>Predictive analytics & forecasting</li>
+                    <li>AI-powered recommendations</li>
+                </ul>
             </div>
-            <h1 class="brand-title">MARKET LENS</h1>
-            <p class="brand-subtitle">Advanced Analytics & Business Intelligence Platform</p>
-            
-            <ul class="features-list">
-                <li>Real-time data analytics and insights</li>
-                <li>Customer behavior analysis</li>
-                <li>Predictive analytics & forecasting</li>
-                <li>AI-powered recommendations</li>
-            </ul>
         </div>
-    </div>
 
-    <!-- Right Login Panel -->
-    <div class="login-panel">
-        <div class="login-container">
-            <div class="login-header">
-                <h2 class="login-title">Welcome Back</h2>
-                <p class="login-description">Enter your credentials to access your account</p>
-            </div>
-
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-
-            <form method="POST" action="{{ url_for('login') }}">
-                <div class="form-group">
-                    <label for="username" class="form-label">Username</label>
-                    <input 
-                        type="text" 
-                        id="username" 
-                        name="username" 
-                        class="form-control" 
-                        placeholder="Enter your username"
-                        required
-                        autocomplete="username"
-                    >
+        <!-- Right Login Panel -->
+        <div class="login-panel">
+            <div class="login-container">
+                <div class="login-header">
+                    <h2 class="login-title">Welcome Back</h2>
+                    <p class="login-description">Enter your credentials to access your account</p>
                 </div>
 
-                <div class="form-group">
-                    <label for="password" class="form-label">Password</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        class="form-control" 
-                        placeholder="Enter your password"
-                        required
-                        autocomplete="current-password"
-                    >
-                </div>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
 
-                <div class="form-group">
-                    <label for="role" class="form-label">Role</label>
-                    <select id="role" name="role" class="form-select" required>
-                        <option value="" disabled selected>Select your role</option>
-                        <option value="CEO">CEO</option>
-                        <option value="Company Analyst">Company Analyst</option>
-                    </select>
-                </div>
-
-                <div class="checkbox-group">
-                    <div class="checkbox-wrapper">
-                        <input type="checkbox" id="remember" name="remember">
-                        <label for="remember">Remember me</label>
+                <form method="POST" action="{{ url_for('login') }}">
+                    <div class="form-group">
+                        <label for="username" class="form-label">Username</label>
+                        <input 
+                            type="text" 
+                            id="username" 
+                            name="username" 
+                            class="form-control" 
+                            placeholder="Enter your username"
+                            required
+                            autocomplete="username"
+                        >
                     </div>
-                    <a href="#" class="forgot-link">Forgot Password?</a>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            class="form-control" 
+                            placeholder="Enter your password"
+                            required
+                            autocomplete="current-password"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="business_name" class="form-label">Business Name</label>
+                        <input 
+                            type="text" 
+                            id="business_name" 
+                            name="business_name" 
+                            class="form-control" 
+                            placeholder="Enter your business name"
+                            autocomplete="organization"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="business_category" class="form-label">Business Category</label>
+                        <select id="business_category" name="business_category" class="form-select">
+                            <option value="" disabled selected>Select your business category</option>
+                            <option value="Retail">Retail</option>
+                            <option value="E-commerce">E-commerce</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Finance">Finance & Banking</option>
+                            <option value="Education">Education</option>
+                            <option value="Hospitality">Hospitality & Tourism</option>
+                            <option value="Real Estate">Real Estate</option>
+                            <option value="Manufacturing">Manufacturing</option>
+                            <option value="Professional Services">Professional Services</option>
+                            <option value="Food & Beverage">Food & Beverage</option>
+                            <option value="Transportation">Transportation & Logistics</option>
+                            <option value="Media">Media & Entertainment</option>
+                            <option value="Telecommunications">Telecommunications</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role" class="form-label">Role</label>
+                        <select id="role" name="role" class="form-select" required>
+                            <option value="" disabled selected>Select your role</option>
+                            <option value="CEO">CEO</option>
+                            <option value="Company Analyst">Company Analyst</option>
+                        </select>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        <a href="{{ url_for('forgot_password') }}" class="forgot-link">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="btn-login">Sign In</button>
+                </form>
+
+                <div class="signup-section">
+                    <span class="signup-text">Don't have an account?</span>
+                    <a href="{{ url_for('register') }}" class="signup-link">Create Account</a>
                 </div>
 
-                <button type="submit" class="btn-login">Sign In</button>
-            </form>
-
-            <div class="signup-section">
-                <span class="signup-text">Don't have an account?</span>
-                <a href="{{ url_for('register') }}" class="signup-link">Create Account</a>
-            </div>
-
-            <div class="login-footer">
-                <p>&copy; 2026 Market Lens. All rights reserved.</p>
+                <div class="login-footer">
+                    <p>&copy; 2026 Market Lens. All rights reserved.</p>
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        // ── Keep fields visible once they have a value ──
+        function trackValue(el) {
+            const update = () => {
+                if (el.value.trim() !== '') {
+                    el.classList.add('has-value');
+                } else {
+                    el.classList.remove('has-value');
+                }
+            };
+            el.addEventListener('input', update);
+            el.addEventListener('change', update);
+            update(); // run on load in case browser autofills
+        }
+
+        document.querySelectorAll('.form-control, .form-select').forEach(trackValue);
+
+        // ── Autofill business info on username input ──
+        const usernameInput = document.getElementById('username');
+        const businessNameInput = document.getElementById('business_name');
+        const businessCategorySelect = document.getElementById('business_category');
+
+        let autofillTimeout = null;
+
+        if (usernameInput) {
+            usernameInput.addEventListener('input', function () {
+                const username = this.value.trim();
+                clearTimeout(autofillTimeout);
+
+                if (!username) {
+                    if (businessNameInput) businessNameInput.value = '';
+                    if (businessCategorySelect) businessCategorySelect.value = '';
+                    return;
+                }
+
+                autofillTimeout = setTimeout(() => {
+                    fetch(`/api/get_business_info/${encodeURIComponent(username)}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                if (businessNameInput && data.business_name) {
+                                    businessNameInput.value = data.business_name;
+                                    businessNameInput.classList.add('has-value');
+                                    businessNameInput.style.transition = 'background 0.4s ease';
+                                    businessNameInput.style.background = 'rgba(37, 99, 235, 0.08)';
+                                    setTimeout(() => { businessNameInput.style.background = '#ffffff'; }, 1000);
+                                }
+                                if (businessCategorySelect && data.business_category) {
+                                    businessCategorySelect.value = data.business_category;
+                                    businessCategorySelect.classList.add('has-value');
+                                    businessCategorySelect.style.transition = 'background 0.4s ease';
+                                    businessCategorySelect.style.background = 'rgba(37, 99, 235, 0.08)';
+                                    setTimeout(() => { businessCategorySelect.style.background = '#ffffff'; }, 1000);
+                                }
+                            } else {
+                                if (businessNameInput) { businessNameInput.value = ''; businessNameInput.classList.remove('has-value'); }
+                                if (businessCategorySelect) { businessCategorySelect.value = ''; businessCategorySelect.classList.remove('has-value'); }
+                            }
+                        })
+                        .catch(() => {});
+                }, 500);
+            });
+        }
+
+        // Professional page transition animation
+        const signupLink = document.querySelector('.signup-link');
+        if (signupLink) {
+            signupLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                const brandPanel = document.querySelector('.brand-panel');
+                const loginPanel = document.querySelector('.login-panel');
+                const brandContent = document.querySelector('.brand-content');
+                const loginContainer = document.querySelector('.login-container');
+                
+                if (brandPanel && loginPanel) {
+                    // Fade out content first
+                    brandContent.style.opacity = '0';
+                    brandContent.style.transform = 'scale(0.95)';
+                    loginContainer.style.opacity = '0';
+                    loginContainer.style.transform = 'translateX(-30px)';
+                    
+                    // Then slide panels
+                    setTimeout(() => {
+                        brandPanel.style.transform = 'translateX(122%)';
+                        brandPanel.style.opacity = '0.3';
+                        loginPanel.style.transform = 'translateX(-20px)';
+                    }, 300);
+                    
+                    // Navigate after animation
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 1200);
+                }
+            });
+        }
+    </script>
 </body>
 </html>

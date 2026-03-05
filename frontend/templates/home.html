@@ -7,7 +7,7 @@
     /* Hero Section */
     .hero-section {
         background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
-        padding: 4rem 2rem;
+        padding: 0.75rem 2rem;
         border-radius: 16px;
         margin-bottom: 3rem;
         color: white;
@@ -17,7 +17,7 @@
     .hero-title {
         font-size: 3rem;
         font-weight: 700;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
         letter-spacing: -0.02em;
     }
 
@@ -25,15 +25,15 @@
         font-size: 1.25rem;
         opacity: 0.95;
         max-width: 700px;
-        margin: 0 auto 2rem auto;
+        margin: 0 auto;
         line-height: 1.7;
         font-weight: 400;
     }
 
     /* Upload Section */
     .upload-card {
-        background: white;
-        border: 2px dashed #cbd5e1;
+        background: var(--bg-card);
+        border: 2px dashed var(--border);
         border-radius: 12px;
         padding: 3rem 2rem;
         text-align: center;
@@ -62,14 +62,14 @@
 
     .upload-text {
         font-size: 1.25rem;
-        color: #1e293b;
+        color: var(--text-primary);
         margin-bottom: 0.5rem;
         font-weight: 600;
     }
 
     .upload-subtext {
         font-size: 0.95rem;
-        color: #64748b;
+        color: var(--text-secondary);
         margin-bottom: 2rem;
     }
 
@@ -80,10 +80,10 @@
     .file-label {
         display: inline-block;
         padding: 0.75rem 1.5rem;
-        background: #f1f5f9;
-        border: 1.5px solid #e2e8f0;
+        background: var(--bg-nav-hover);
+        border: 1.5px solid var(--border);
         border-radius: 8px;
-        color: #475569;
+        color: var(--text-secondary);
         cursor: pointer;
         transition: all 0.2s;
         font-weight: 500;
@@ -91,7 +91,7 @@
 
     .file-label:hover {
         background: #e2e8f0;
-        border-color: #cbd5e1;
+        border-color: var(--border);
     }
 
     input[type="file"] {
@@ -101,7 +101,7 @@
     .file-name {
         display: inline-block;
         margin-left: 1rem;
-        color: #64748b;
+        color: var(--text-secondary);
         font-size: 0.9rem;
     }
 
@@ -130,14 +130,14 @@
     .section-title {
         font-size: 2rem;
         font-weight: 700;
-        color: #1e293b;
+        color: var(--text-primary);
         text-align: center;
         margin-bottom: 0.75rem;
     }
 
     .section-subtitle {
         font-size: 1.1rem;
-        color: #64748b;
+        color: var(--text-secondary);
         text-align: center;
         margin-bottom: 3rem;
     }
@@ -151,8 +151,8 @@
     }
 
     .feature-card {
-        background: white;
-        border: 1px solid #e2e8f0;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
         border-radius: 12px;
         padding: 2rem;
         transition: all 0.2s;
@@ -160,15 +160,15 @@
     }
 
     .feature-card:hover {
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        border-color: #cbd5e1;
+        box-shadow: var(--shadow-card-hover);
+        border-color: var(--border);
         transform: translateY(-2px);
     }
 
     .feature-icon {
         width: 60px;
         height: 60px;
-        background: #f1f5f9;
+        background: var(--bg-nav-hover);
         border-radius: 12px;
         display: flex;
         align-items: center;
@@ -184,13 +184,13 @@
     .feature-title {
         font-size: 1.25rem;
         font-weight: 700;
-        color: #1e293b;
+        color: var(--text-primary);
         margin-bottom: 0.75rem;
     }
 
     .feature-description {
         font-size: 0.95rem;
-        color: #64748b;
+        color: var(--text-secondary);
         line-height: 1.6;
     }
 

@@ -1,30 +1,94 @@
 {% extends 'base.html' %}
 {% block content %}
 <style>
+    /* ── Compact Hero ── */
     .hero-section {
         background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
-        padding: 5rem 2rem;
+        padding: 0 2.5rem;
         border-radius: 16px;
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
         color: white;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        min-height: 140px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* subtle grid overlay */
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+        background-size: 32px 32px;
+        border-radius: inherit;
+        pointer-events: none;
+    }
+
+    /* right glow blob */
+    .hero-section::after {
+        content: '';
+        position: absolute;
+        right: -60px; top: -60px;
+        width: 240px; height: 240px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 65%);
+        pointer-events: none;
+    }
+
+    .hero-left {
+        position: relative;
+        z-index: 1;
     }
 
     .main-title {
-        font-size: 3.5rem;
+        font-size: 2.25rem;
         font-weight: 700;
-        margin-bottom: 1rem;
+        margin: 0 0 6px 0;
         letter-spacing: -0.02em;
+        line-height: 1.15;
     }
 
     .subtitle {
-        font-size: 1.35rem;
-        margin-bottom: 2rem;
-        opacity: 0.95;
+        font-size: 1rem;
+        opacity: 0.8;
         font-weight: 400;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 0;
+    }
+
+    /* right: quick-stat pills */
+    .hero-stats {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        position: relative;
+        z-index: 1;
+        flex-shrink: 0;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .hero-stat-pill {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 999px;
+        padding: 0.45rem 1rem;
+        font-size: 0.82rem;
+        font-weight: 500;
+        white-space: nowrap;
+    }
+
+    .hero-stat-pill i {
+        font-size: 0.74rem;
+        opacity: 0.85;
     }
 
     .content-wrapper {
@@ -37,8 +101,8 @@
     }
 
     .upload-section {
-        background: white;
-        border: 2px dashed #cbd5e1;
+        background: var(--bg-card);
+        border: 2px dashed var(--border);
         border-radius: 12px;
         padding: 2.5rem;
         transition: all 0.2s;
@@ -52,12 +116,12 @@
     .upload-section h4 {
         font-size: 1.5rem;
         font-weight: 700;
-        color: #1e293b;
+        color: var(--text-primary);
         margin-bottom: 1rem;
     }
 
     .upload-section p {
-        color: #64748b;
+        color: var(--text-secondary);
         margin-bottom: 2rem;
         font-size: 0.95rem;
     }
@@ -76,8 +140,8 @@
     .file-upload-label {
         display: block;
         padding: 2rem;
-        background: #f8fafc;
-        border: 2px dashed #cbd5e1;
+        background: var(--bg-user-info);
+        border: 2px dashed var(--border);
         border-radius: 12px;
         text-align: center;
         cursor: pointer;
@@ -85,7 +149,7 @@
     }
 
     .file-upload-label:hover {
-        background: #f1f5f9;
+        background: var(--bg-user-info-hover);
         border-color: #2563eb;
     }
 
@@ -97,7 +161,7 @@
     }
 
     .file-upload-label span {
-        color: #64748b;
+        color: var(--text-secondary);
         font-weight: 500;
     }
 
@@ -125,8 +189,8 @@
     }
 
     .segment-card {
-        background: white;
-        border: 1px solid #e2e8f0;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
         border-radius: 12px;
         padding: 1.75rem;
         text-align: center;
@@ -135,8 +199,8 @@
     }
 
     .segment-card:hover {
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        border-color: #cbd5e1;
+        box-shadow: var(--shadow-card-hover);
+        border-color: #2563eb;
         transform: translateY(-2px);
     }
 
@@ -150,12 +214,12 @@
         font-size: 1.15rem;
         font-weight: 600;
         margin-bottom: 0.5rem;
-        color: #1e293b;
+        color: var(--text-primary);
     }
 
     .segment-desc {
         font-size: 0.9rem;
-        color: #64748b;
+        color: var(--text-secondary);
         line-height: 1.5;
     }
 
@@ -171,7 +235,7 @@
     .progress {
         height: 2.5rem;
         border-radius: 8px;
-        background: #f1f5f9;
+        background: var(--bg-nav-hover);
         overflow: hidden;
     }
 
@@ -198,14 +262,18 @@
     }
 
     @media (max-width: 968px) {
-        .main-title {
-            font-size: 2.5rem;
+        .hero-section {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 1.25rem 1.5rem;
+            min-height: unset;
+            gap: 0.75rem;
         }
-        
-        .subtitle {
-            font-size: 1.2rem;
+
+        .hero-stats {
+            flex-wrap: wrap;
         }
-        
+
         .content-wrapper {
             grid-template-columns: 1fr;
             gap: 2rem;
@@ -218,8 +286,27 @@
 </style>
 
 <div class="hero-section">
-    <h1 class="main-title">Market Lens</h1>
-    <p class="subtitle">Unlock insights through intelligent data analysis</p>
+    <!-- Left: title + subtitle only -->
+    <div class="hero-left">
+        <h1 class="main-title">Market Lens</h1>
+        <p class="subtitle">Unlock insights through intelligent data analysis</p>
+    </div>
+
+    <!-- Right: feature pills -->
+    <div class="hero-stats">
+        <div class="hero-stat-pill">
+            <i class="fas fa-bolt"></i> RFM Segmentation
+        </div>
+        <div class="hero-stat-pill">
+            <i class="fas fa-brain"></i> Predictive AI
+        </div>
+        <div class="hero-stat-pill">
+            <i class="fas fa-globe"></i> Geo Analysis
+        </div>
+        <div class="hero-stat-pill">
+            <i class="fas fa-shield-alt"></i> Churn Detection
+        </div>
+    </div>
 </div>
 
 <div class="content-wrapper">

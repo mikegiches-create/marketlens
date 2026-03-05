@@ -3,68 +3,16 @@
 
 {% block content %}
 <style>
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    .stat-card {
-        background: white;
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-        padding: 1.5rem;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    }
-
-    .stat-label {
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: #64748b;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        margin-bottom: 0.5rem;
-    }
-
-    .stat-value {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #1e293b;
-    }
-
-    .stat-icon {
-        float: right;
-        font-size: 2rem;
-        color: #cbd5e1;
-    }
-
-    .chart-container {
-        background: white;
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    }
-
-    .chart-title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: #1e293b;
-        margin-bottom: 1rem;
-        padding-bottom: 0.75rem;
-        border-bottom: 1px solid #f1f5f9;
-    }
-
-    .btn-group {
-        display: flex;
-        gap: 0.75rem;
-        margin-bottom: 2rem;
-    }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+    .stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; box-shadow: var(--shadow-card); }
+    .stat-label { font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .stat-value { font-size: 2rem; font-weight: 700; color: var(--text-primary); }
+    .stat-icon { float: right; font-size: 2rem; color: var(--text-muted); }
+    .chart-container { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--shadow-card); }
+    .chart-title { font-size: 1.25rem; font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+    .btn-group { display: flex; gap: 0.75rem; margin-bottom: 2rem; }
 </style>
 
-<!-- Page Header -->
 <div class="page-header">
     <h1 class="page-header-title"><i class="fas fa-user-slash me-2"></i>Churn Analysis</h1>
     <p class="page-header-subtitle">Identify and analyze customer churn patterns</p>
@@ -73,55 +21,83 @@
 {% if error %}
     <div class="alert alert-danger">{{ error }}</div>
 {% else %}
-    <!-- Action Buttons -->
     <div class="btn-group">
-        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
-            <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
-        </a>
-        <a href="{{ url_for('overview_analysis') }}" class="btn btn-primary">
-            <i class="fas fa-chart-pie me-2"></i>Overview Analysis
-        </a>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary"><i class="fas fa-arrow-left me-2"></i>Back to Dashboard</a>
+        <a href="{{ url_for('overview_analysis') }}" class="btn btn-primary"><i class="fas fa-chart-pie me-2"></i>Overview Analysis</a>
     </div>
 
-    <!-- Stats Grid -->
+    {% if churn_summary %}
     <div class="stats-grid">
         <div class="stat-card">
             <i class="fas fa-users stat-icon"></i>
             <div class="stat-label">Total Customers</div>
-            <div class="stat-value">{{ total_customers if total_customers else '0' }}</div>
+            <div class="stat-value">{{ churn_summary['Total Customers'] }}</div>
         </div>
         <div class="stat-card">
-            <i class="fas fa-user-times stat-icon" style="color: #dc2626;"></i>
-            <div class="stat-label">Churned Customers</div>
-            <div class="stat-value" style="color: #dc2626;">{{ churned_customers if churned_customers else '0' }}</div>
+            <i class="fas fa-exclamation-triangle stat-icon" style="color:#dc2626;"></i>
+            <div class="stat-label">High Churn Risk</div>
+            <div class="stat-value" style="color:#dc2626;">{{ churn_summary['High Risk'] }}</div>
         </div>
         <div class="stat-card">
-            <i class="fas fa-percentage stat-icon" style="color: #f59e0b;"></i>
-            <div class="stat-label">Churn Rate</div>
-            <div class="stat-value" style="color: #f59e0b;">{{ churn_rate if churn_rate else '0%' }}</div>
+            <i class="fas fa-exclamation-circle stat-icon" style="color:#f59e0b;"></i>
+            <div class="stat-label">Medium Churn Risk</div>
+            <div class="stat-value" style="color:#f59e0b;">{{ churn_summary['Medium Risk'] }}</div>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-check-circle stat-icon" style="color:#16a34a;"></i>
+            <div class="stat-label">Low Churn Risk</div>
+            <div class="stat-value" style="color:#16a34a;">{{ churn_summary['Low Risk'] }}</div>
         </div>
     </div>
+    {% endif %}
 
-    <!-- Charts -->
     <div class="row">
-        <div class="col-12">
+        {% if churn_pie_chart %}
+        <div class="col-lg-6 mb-4">
             <div class="chart-container">
-                <h3 class="chart-title">Churn Analysis Visualization</h3>
-                <div id="churn-chart"></div>
+                <h3 class="chart-title">Churn Risk Distribution</h3>
+                {{ churn_pie_chart | safe }}
             </div>
         </div>
+        {% endif %}
+        {% if churn_bar_chart %}
+        <div class="col-lg-6 mb-4">
+            <div class="chart-container">
+                <h3 class="chart-title">Avg Spending by Churn Risk</h3>
+                {{ churn_bar_chart | safe }}
+            </div>
+        </div>
+        {% endif %}
     </div>
+
+    {% if churn_line_chart %}
+    <div class="chart-container">
+        <h3 class="chart-title">Spending Score Trend by Customer</h3>
+        {{ churn_line_chart | safe }}
+    </div>
+    {% endif %}
+
+    {% if churn_results is not none and not churn_results.empty %}
+    <div class="card">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="card-title mb-0">Churn Risk Results</h5>
+            {% if download_link %}<a href="{{ download_link }}" class="btn btn-success"><i class="fas fa-download me-2"></i>Download CSV</a>{% endif %}
+        </div>
+        <div class="table-responsive">
+            {{ churn_results.to_html(classes='table table-hover display', index=False, table_id='churnTable') | safe }}
+        </div>
+    </div>
+    {% endif %}
 {% endif %}
 
-{% if chart_json %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const chartData = {{ chart_json | safe }};
-        Plotly.newPlot('churn-chart', chartData.data, chartData.layout, {
-            responsive: true,
-            displayModeBar: true
-        });
-    });
+$(document).ready(function() {
+    if ($('#churnTable').length) {
+        $('#churnTable').DataTable({ pageLength: 10, searching: true, ordering: true });
+    }
+});
 </script>
-{% endif %}
 {% endblock %}
