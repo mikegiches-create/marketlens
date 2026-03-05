@@ -111,10 +111,10 @@ class SimpleMemory:
 from demographic import calculate_demographic_trends
 
 # Set up paths for frontend templates and static files
-template_folder = os.path.join(project_root, 'frontend', 'templates')
-static_folder = os.path.join(project_root, 'frontend', 'static')
-
-app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
+# Explicitly set the folder paths so Vercel can find them
+app = Flask(__name__, 
+            template_folder='../frontend/templates',
+            static_folder='../frontend/static')
 
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.jinja_env.auto_reload = True
