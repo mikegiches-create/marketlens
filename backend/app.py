@@ -15,7 +15,7 @@ if os.path.exists(secret_env):
     load_dotenv(secret_env)
 
 # Import Mistral AI Client
-from mistral_client import MistralClientWrapper
+from backend.mistral_client import MistralClientWrapper
 
 # Initialize the Mistral AI client
 client = MistralClientWrapper()
