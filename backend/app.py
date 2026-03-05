@@ -574,58 +574,64 @@ def generate_progress(file_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    def load_users():
-        users = app.config.get('USERS')
-        if users is None:
-            users = {}
-            try:
-                if os.path.exists(app.config['USERS_FILE']):
-                    with open(app.config['USERS_FILE'], 'r', encoding='utf-8') as f:
-                        users = json.load(f)
-            except Exception:
+    try:
+        def load_users():
+            users = app.config.get('USERS')
+            if users is None:
                 users = {}
-            app.config['USERS'] = users
-        return app.config['USERS']
+                try:
+                    if os.path.exists(app.config['USERS_FILE']):
+                        with open(app.config['USERS_FILE'], 'r', encoding='utf-8') as f:
+                            users = json.load(f)
+                except Exception:
+                    users = {}
+                app.config['USERS'] = users
+            return app.config['USERS']
 
-    error = None
+        error = None
 
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        role = request.form.get('role')
+        if request.method == 'POST':
+            username = request.form.get('username')
+            password = request.form.get('password')
+            role = request.form.get('role')
 
-        if not username or not password or not role:
-            return render_template('login.html', error='Please fill all fields.')
+            if not username or not password or not role:
+                return render_template('login.html', error='Please fill all fields.')
 
-        users = load_users()
+            users = load_users()
 
-        if username not in users:
-            return render_template('login.html', error='Invalid username or password.')
+            if username not in users:
+                return render_template('login.html', error='Invalid username or password.')
 
-        user_data = users[username]
+            user_data = users[username]
 
-        if not check_password_hash(user_data['password'], password):
-            return render_template('login.html', error='Invalid username or password.')
+            if not check_password_hash(user_data['password'], password):
+                return render_template('login.html', error='Invalid username or password.')
 
-        if user_data.get('role') != role:
-            return render_template('login.html', error='Invalid role selected for this user.')
+            if user_data.get('role') != role:
+                return render_template('login.html', error='Invalid role selected for this user.')
 
-        session['user'] = username
-        session['role'] = user_data.get('role', 'Company Analyst')
-        session['email'] = user_data.get('email', '')
-        session['business_name'] = user_data.get('business_name', '')
-        session['business_category'] = user_data.get('business_category', '')
-        session['login_time'] = datetime.now().isoformat()
+            session['user'] = username
+            session['role'] = user_data.get('role', 'Company Analyst')
+            session['email'] = user_data.get('email', '')
+            session['business_name'] = user_data.get('business_name', '')
+            session['business_category'] = user_data.get('business_category', '')
+            session['login_time'] = datetime.now().isoformat()
 
-        return redirect(url_for('home'))
+            return redirect(url_for('home'))
 
-    return render_template('login.html', error=None)
+        return render_template('login.html', error=None)
+    except Exception as e:
+        return render_template('login.html', error=f'An unexpected error occurred: {str(e)}')
 
 
 @app.route('/logout')
 def logout():
-    session.clear()
-    return redirect(url_for('login'))
+    try:
+        session.clear()
+        return redirect(url_for('login'))
+    except Exception as e:
+        return render_template('error.html', error='Logout Error', message=f"An error occurred during logout: {str(e)}")
 
 
 @app.route('/api/get_business_info/<username>', methods=['GET'])
@@ -647,7 +653,10 @@ def get_business_info(username):
 @app.route('/settings')
 @login_required
 def settings():
-    return render_template('settings.html')
+    try:
+        return render_template('settings.html')
+    except Exception as e:
+        return render_template('error.html', error='Settings Error', message=f"An error occurred loading settings: {str(e)}")
 
 
 @app.route('/change_password', methods=['POST'])
@@ -734,66 +743,69 @@ def delete_account():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    def load_users():
-        users = app.config.get('USERS')
-        if users is None:
-            users = {}
-            try:
-                if os.path.exists(app.config['USERS_FILE']):
-                    with open(app.config['USERS_FILE'], 'r', encoding='utf-8') as f:
-                        users = json.load(f)
-            except Exception:
+    try:
+        def load_users():
+            users = app.config.get('USERS')
+            if users is None:
                 users = {}
-            app.config['USERS'] = users
-        return app.config['USERS']
+                try:
+                    if os.path.exists(app.config['USERS_FILE']):
+                        with open(app.config['USERS_FILE'], 'r', encoding='utf-8') as f:
+                            users = json.load(f)
+                except Exception:
+                    users = {}
+                app.config['USERS'] = users
+            return app.config['USERS']
 
-    def save_users(users):
-        try:
-            with open(app.config['USERS_FILE'], 'w', encoding='utf-8') as f:
-                json.dump(users, f, indent=2)
-        except Exception:
-            pass
+        def save_users(users):
+            try:
+                with open(app.config['USERS_FILE'], 'w', encoding='utf-8') as f:
+                    json.dump(users, f, indent=2)
+            except Exception:
+                pass
 
-    if request.method == 'POST':
-        username = request.form.get('username')
-        email = request.form.get('email')
-        password = request.form.get('password')
-        role = request.form.get('role')
-        business_name = request.form.get('business_name')
-        business_category = request.form.get('business_category')
+        if request.method == 'POST':
+            username = request.form.get('username')
+            email = request.form.get('email')
+            password = request.form.get('password')
+            role = request.form.get('role')
+            business_name = request.form.get('business_name')
+            business_category = request.form.get('business_category')
 
-        if not username or not email or not password or not role or not business_name or not business_category:
-            return render_template('register.html', error='Please fill all fields.')
+            if not username or not email or not password or not role or not business_name or not business_category:
+                return render_template('register.html', error='Please fill all fields.')
 
-        if role not in ('CEO', 'Company Analyst'):
-            return render_template('register.html', error='Invalid role selected.')
+            if role not in ('CEO', 'Company Analyst'):
+                return render_template('register.html', error='Invalid role selected.')
 
-        valid_categories = [
-            'Retail', 'E-commerce', 'Technology', 'Healthcare', 'Finance',
-            'Education', 'Hospitality', 'Real Estate', 'Manufacturing',
-            'Professional Services', 'Food & Beverage', 'Transportation',
-            'Media', 'Telecommunications', 'Other'
-        ]
-        if business_category not in valid_categories:
-            return render_template('register.html', error='Invalid business category selected.')
+            valid_categories = [
+                'Retail', 'E-commerce', 'Technology', 'Healthcare', 'Finance',
+                'Education', 'Hospitality', 'Real Estate', 'Manufacturing',
+                'Professional Services', 'Food & Beverage', 'Transportation',
+                'Media', 'Telecommunications', 'Other'
+            ]
+            if business_category not in valid_categories:
+                return render_template('register.html', error='Invalid business category selected.')
 
-        users = load_users()
-        if username in users:
-            return render_template('register.html', error='Username already exists. Choose another.')
+            users = load_users()
+            if username in users:
+                return render_template('register.html', error='Username already exists. Choose another.')
 
-        hashed = generate_password_hash(password)
-        users[username] = {
-            'password': hashed,
-            'role': role,
-            'email': email,
-            'business_name': business_name,
-            'business_category': business_category
-        }
-        save_users(users)
-        flash('Account created successfully! Please login with your credentials.', 'success')
-        return redirect(url_for('login'))
+            hashed = generate_password_hash(password)
+            users[username] = {
+                'password': hashed,
+                'role': role,
+                'email': email,
+                'business_name': business_name,
+                'business_category': business_category
+            }
+            save_users(users)
+            flash('Account created successfully! Please login with your credentials.', 'success')
+            return redirect(url_for('login'))
 
-    return render_template('register.html', error=None)
+        return render_template('register.html', error=None)
+    except Exception as e:
+        return render_template('register.html', error=f'An unexpected error occurred: {str(e)}')
 
 
 # ─────────────────────────────────────────────
@@ -941,9 +953,12 @@ Proceed with analysis:
 @app.route('/ask_data_ui')
 @login_required
 def ask_data_ui():
-    if 'last_uploaded_file_id' not in session:
-        return render_template('ask_data.html', error="No data uploaded. Please upload a CSV file first.")
-    return render_template('ask_data.html')
+    try:
+        if 'last_uploaded_file_id' not in session:
+            return render_template('ask_data.html', error="No data uploaded. Please upload a CSV file first.")
+        return render_template('ask_data.html')
+    except Exception as e:
+        return render_template('error.html', error='Ask Data Error', message=f"An error occurred loading the ask data page: {str(e)}")
 
 
 @app.route('/chat', methods=['POST'])
@@ -1067,47 +1082,53 @@ def allowed_file(filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    if 'user' not in session:
-        return redirect(url_for('login'))
+    try:
+        if 'user' not in session:
+            return redirect(url_for('login'))
 
-    if request.method == 'POST':
-        if 'file' not in request.files:
-            return render_template('index.html', error='No file part')
-        file = request.files['file']
-        if file.filename == '':
-            return render_template('index.html', error='No selected file')
-        if file and allowed_file(file.filename):
-            file_id = id(file)
-            upload_progress[file_id] = 0
-            threading.Thread(target=track_upload, args=(file_id,), daemon=True).start()
-            try:
-                df = pd.read_csv(file)
-                uploaded_data[file_id] = df
-                session['last_uploaded_file_id'] = file_id
-                agent = create_agent_for_dataframe(df, file_id)
-                if agent:
-                    print(f"✅ Dataframe agent created for file_id: {file_id}")
-            except Exception as e:
-                return render_template('index.html', error=f"Error processing file: {str(e)}")
-            return Response(generate_progress(file_id), mimetype='text/event-stream')
+        if request.method == 'POST':
+            if 'file' not in request.files:
+                return render_template('index.html', error='No file part')
+            file = request.files['file']
+            if file.filename == '':
+                return render_template('index.html', error='No selected file')
+            if file and allowed_file(file.filename):
+                file_id = id(file)
+                upload_progress[file_id] = 0
+                threading.Thread(target=track_upload, args=(file_id,), daemon=True).start()
+                try:
+                    df = pd.read_csv(file)
+                    uploaded_data[file_id] = df
+                    session['last_uploaded_file_id'] = file_id
+                    agent = create_agent_for_dataframe(df, file_id)
+                    if agent:
+                        print(f"✅ Dataframe agent created for file_id: {file_id}")
+                except Exception as e:
+                    return render_template('index.html', error=f"Error processing file: {str(e)}")
+                return Response(generate_progress(file_id), mimetype='text/event-stream')
 
-    return render_template('index.html')
+        return render_template('index.html')
+    except Exception as e:
+        return render_template('index.html', error=f"An unexpected error occurred: {str(e)}")
 
 
 @app.route('/dashboard')
 def dashboard():
-    if 'user' not in session:
-        return redirect(url_for('login'))
+    try:
+        if 'user' not in session:
+            return redirect(url_for('login'))
 
-    role = session.get('role')
-    view = request.args.get('view', 'analyst' if role == 'Company Analyst' else 'executive')
-    context = {
-        'user': session.get('user'),
-        'role': role,
-        'login_time': session.get('login_time'),
-        'view': view
-    }
-    return render_template('dashboard.html', **context)
+        role = session.get('role')
+        view = request.args.get('view', 'analyst' if role == 'Company Analyst' else 'executive')
+        context = {
+            'user': session.get('user'),
+            'role': role,
+            'login_time': session.get('login_time'),
+            'view': view
+        }
+        return render_template('dashboard.html', **context)
+    except Exception as e:
+        return render_template('error.html', error='Dashboard Error', message=f"An error occurred loading the dashboard: {str(e)}")
 
 
 # ─────────────────────────────────────────────
@@ -1117,63 +1138,66 @@ def dashboard():
 @app.route('/overview')
 @login_required
 def overview_analysis():
-    error = None
-    summary = None
-    table_html = None
-    columns = []
-    month_list = []
-    selected_month = request.args.get('month', 'All')
+    try:
+        error = None
+        summary = None
+        table_html = None
+        columns = []
+        month_list = []
+        selected_month = request.args.get('month', 'All')
 
-    if 'last_uploaded_file_id' in session and session['last_uploaded_file_id'] in uploaded_data:
-        df = uploaded_data[session['last_uploaded_file_id']].copy()
-        print(f"Columns available in overview: {df.columns.tolist()}")
+        if 'last_uploaded_file_id' in session and session['last_uploaded_file_id'] in uploaded_data:
+            df = uploaded_data[session['last_uploaded_file_id']].copy()
+            print(f"Columns available in overview: {df.columns.tolist()}")
 
-        # ── Month filtering ─────────────────────────────────────────────
-        time_column = next((c for c in ['OrderDate', 'PurchaseDate', 'Date'] if c in df.columns), None)
-        if time_column:
-            df[time_column] = pd.to_datetime(df[time_column], errors='coerce')
-            df.dropna(subset=[time_column], inplace=True)
-            df['_Month'] = df[time_column].dt.to_period('M').astype(str)
-            month_list = sorted(df['_Month'].unique().tolist())
-            if selected_month != 'All':
-                df = df[df['_Month'] == selected_month]
-            # drop helper column before rendering
-            df = df.drop(columns=['_Month'])
+            # ── Month filtering ─────────────────────────────────────────────
+            time_column = next((c for c in ['OrderDate', 'PurchaseDate', 'Date'] if c in df.columns), None)
+            if time_column:
+                df[time_column] = pd.to_datetime(df[time_column], errors='coerce')
+                df.dropna(subset=[time_column], inplace=True)
+                df['_Month'] = df[time_column].dt.to_period('M').astype(str)
+                month_list = sorted(df['_Month'].unique().tolist())
+                if selected_month != 'All':
+                    df = df[df['_Month'] == selected_month]
+                # drop helper column before rendering
+                df = df.drop(columns=['_Month'])
 
-        # ── Summary stat cards ──────────────────────────────────────────
-        summary = {
-            'total_customers': df['CustomerID'].nunique() if 'CustomerID' in df.columns else len(df),
-            'avg_spending':    round(df['Spending_Score'].mean(), 2)  if 'Spending_Score' in df.columns else 'N/A',
-            'avg_income':      round(df['Annual_Income'].mean(), 2)   if 'Annual_Income'  in df.columns else 'N/A',
-            'most_common_region': (
-                df['Region'].mode()[0]
-                if 'Region' in df.columns and not df['Region'].dropna().empty
-                else None
-            ),
-        }
+            # ── Summary stat cards ──────────────────────────────────────────
+            summary = {
+                'total_customers': df['CustomerID'].nunique() if 'CustomerID' in df.columns else len(df),
+                'avg_spending':    round(df['Spending_Score'].mean(), 2)  if 'Spending_Score' in df.columns else 'N/A',
+                'avg_income':      round(df['Annual_Income'].mean(), 2)   if 'Annual_Income'  in df.columns else 'N/A',
+                'most_common_region': (
+                    df['Region'].mode()[0]
+                    if 'Region' in df.columns and not df['Region'].dropna().empty
+                    else None
+                ),
+            }
 
-        # ── Raw data table (DataTables) ─────────────────────────────────
-        columns = df.columns.tolist()
-        table_html = df.to_html(
-            classes='table table-bordered table-striped table-hover display',
-            index=True,
-            table_id='overviewTable',
-            border=0
+            # ── Raw data table (DataTables) ─────────────────────────────────
+            columns = df.columns.tolist()
+            table_html = df.to_html(
+                classes='table table-bordered table-striped table-hover display',
+                index=True,
+                table_id='overviewTable',
+                border=0
+            )
+
+        else:
+            error = "No data available. Please upload a CSV file first."
+            print(f"Error in overview: {error}")
+
+        return render_template(
+            'overview.html',
+            error=error,
+            summary=summary,
+            table_html=table_html,
+            columns=columns,
+            month_list=month_list,
+            selected_month=selected_month
         )
-
-    else:
-        error = "No data available. Please upload a CSV file first."
-        print(f"Error in overview: {error}")
-
-    return render_template(
-        'overview.html',
-        error=error,
-        summary=summary,
-        table_html=table_html,
-        columns=columns,
-        month_list=month_list,
-        selected_month=selected_month
-    )
+    except Exception as e:
+        return render_template('error.html', error='Overview Analysis Error', message=f"An error occurred in overview analysis: {str(e)}")
 
 
 # ─────────────────────────────────────────────
